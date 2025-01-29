@@ -1,0 +1,47 @@
+1- Account/Signin/Signout
+
+// welcome message 
+PRINT "Welcome to the HealthHorizon" 
+
+// registration details 
+PRINT "Create an account:" 
+
+// Get user input 
+PRINT "Enter Username: " 
+username = User Input() 
+// Check if username already exists 
+IF (username exists  in database) then
+PRINT "Error: Username already in use. Please try again." 
+END IF
+
+
+PRINT "Enter Password: " 
+password = User Input() 
+PRINT "Confirm Password: " 
+ConfirmPassword = User Input() 
+// Check if password matches 
+IF password != ConfirmPassword then
+PRINT "Error: Passwords do not match. Please try again." 
+END IF
+
+
+PRINT "Enter Email Address: " 
+email = user input() 
+// Check if an email already exists in the system 
+IF (email exists in database) then
+PRINT "Error: Email already in use. Please try again." 
+END IF 
+
+//User’s signIn
+signIn (username, password)
+//check username and password from database
+IF (username/password exists) then
+PRINT “signIn Successful! “
+ELSE “Try Again! “
+END IF
+
+
+//User’s signOut
+IF (user is logged in) then signOut
+PRINT “signOut Successful! “
+END IF
