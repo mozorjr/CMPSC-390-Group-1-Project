@@ -1,0 +1,43 @@
+3- User’s Goal:
+
+//set users health goals. 
+
+IF current weight > targetWeight then
+PRINT “Keep working on your weight target.”
+END IF
+
+IF steps != targetSteps then
+PRINT “Steps target not achieved! “
+END IF
+
+IF (cardio = 60Minutes/day) then
+PRINT “You have successfully completed today’s goal”
+END IF
+
+
+3b-Data Analysis
+
+//this can be used for storing and formatting any data like steps, time walk/ran, calories burned, etc.. it can also be scaled to account for any intervals we want such as weekly, monthly, yearly
+Create queue(i) <= 7
+
+Insert rear(x)
+
+//check for overflow
+If (rear > c) || (rear == front)
+Delete front()
+Else
+queue(rear) = x
+Rear = rear +1
+End
+
+//weekly results
+Print (queue(rear))
+Print (queue(rear+1))
+Print (queue(rear+2))
+Print (queue(rear+3))
+Print (queue(rear+4))
+Print (queue(rear+5))
+Print (queue(front))
+y = sum of queue(i)
+Print (y)
+end
