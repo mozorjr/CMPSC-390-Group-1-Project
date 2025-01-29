@@ -1,0 +1,40 @@
+2-User’s Profile/Basic Health Information
+
+PRINT "Enter Age: " 
+age = user age () 
+//Check the user’s appropriate age for an app.
+IF (age < 16 OR age > 120) 
+THEN PRINT "Error: Invalid age. Please enter a valid age." 
+END IF
+
+
+PRINT "Enter Gender (Male/Female/Other): " 
+gender = user Input() 
+Check user validation 
+IF (gender != Male/Female/Other) then
+PRINT “Error: Please enter valid response. “
+END IF
+
+
+PRINT "Enter Height (in ft): " 
+height = user input() 
+IF (height < 3ft OR height > 15ft) then
+PRINT “Error: Invalid height. Please enter a valid response. “
+END IF
+
+
+PRINT "Enter Weight (in lbs): " 
+weight = user input() 
+//Check user weight in lbs, it is valid or not.
+IF (weight < 10 OR weight > 800) then
+PRINT "Error: Invalid weight. Please enter a valid weight.“
+END IF 
+
+
+// Store new user in the system
+ADD NewUser TO database 
+
+
+// print account created message 
+PRINT "Account successfully created! " 
+END
