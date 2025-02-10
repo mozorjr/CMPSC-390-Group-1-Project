@@ -1,145 +1,44 @@
-body{
-    background-color: rgb(255, 255, 255);
+.block{
+    width: 100%;
 }
+
 .mainText{
     position: relative;
-    top: 200px;
-    left: 100px;
+    top: 100px;
 }
-.move{
+
+.goalText{
     position: relative;
-    top: 200px;
-    left: 110px;
+    top: 100px;
 }
 
 .logoA{
     position: relative;
-    left: 1200px;
-    margin-top: -260px;
+    top: 70px;
 }
 
 .block{
-    background-color: rgba(128, 128, 128, 0.418);
-    padding: 30px;
-    width: 100%;
-    height: 700px;
-    margin-top: 400px;
-}
-
-.basic{
     position: relative;
-    top: 50px;
-    left: 260px;
-}
-
-.simple{
-    position: relative;
-    top: -28px;
-    left: 839px;
-    padding-left: 20px;
-    padding-right: 20px;
-}
-
-.premium{
-    position: relative;
-    top: -106px;
-    left: 1400px;
-}
-
-.plan1{
-    color: rgb(0, 0, 0);
-    position: relative;
-    top: -20px;
-    left: 120px;
-    list-style-type: circle;
-}
-
-.plan2{
-    color: rgb(0, 0, 0);
-    position: relative;
-    top: -330px;
-    left: 693px;
-}
-
-.plan3{
-    color: rgb(0, 0, 0);
-    position: relative;
-    top: -656px;
-    left: 1291px;
+    top: 10px;
+    height: 500px;
 }
 
 .TrainerI{
     position: relative;
-    padding: 5px;
-    top: 150px;
-    left: 1200px;
+    top: 80px;
 }
 
 .trainerText{
     position: relative;
-    padding: 5px;
-    top: 170px;
-    left: 1210px;
+    top: 80px;
 }
 
 .img{
     position: relative;
-    left: 100px;
-    margin-top: -400px;
+    top: 70px;
 }
 
 .foot{
-    background-color: rgba(128, 128, 128, 0.418);
-    padding: 30px;
-    width: 100%;
-    height: 100px;
-    margin-top: -30px;
-}
-
-.footLink{
-    color: black;
-    text-decoration: none;
-    margin-top: -30px;
-    transform: translateX(800px);
-}
-
-.c{
-    color: black;
-    text-decoration: none;
-}
-
-
-.IconSize{
-    width: 100px;
-    height: auto;
-}
-
-.contaier{
-    display: flex;
-    gap: 10px;
-}
-.img1{
     position: relative;
-    transform: translateY(150px);
-    left: 1675px;
-}
-
-.img2{
-    position: relative;
-    transform: translateY(100px);
-    left: 1800px;
-}
-
-.img3{
-    position: relative;
-    transform: translateY(50px);
-    left: 1740px;
-
-}
-
-html, body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    overflow-x: hidden;
+    top: 80px;
 }
