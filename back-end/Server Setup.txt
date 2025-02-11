@@ -1,4 +1,5 @@
 Digital Ocean seems to offer a good veriaty of perks virtual machines, web hosting, Database mangment using mysql, website hosting, and startup guides.
 Digital Ocean is parntered with Github Eduvcational giving $200 worth of credit for students(still wait for approval).
 It can link directly to Github and poll from the repoosatory.
-For set up I just need to email them a team invite and tehn theycan set up their account. 
+They also allow us to create Droplets which are Virtual Machines with Mysql support.
+For set up I just need to email them a team invite and tehen they can set up their account. 
