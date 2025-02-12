@@ -1,9 +1,15 @@
-# Digital Ocean seems to offer a good veriaty of perks virtual machines, web hosting, Database mangment using mysql, website hosting, and startup guides.
-# Digital Ocean is parntered with Github Eduvcational giving $200 worth of credit for students which depending on how the pay periods fall and timing of the end of the class would give a least $50 a month budget.
+# Digital Ocean seems to offer a good veriaty of perks virtual machines, web hosting, Database mangment using mysql,
+# website hosting, and startup guides.
+# Digital Ocean is parntered with Github Eduvcational giving $200 worth of credit for students which depending on how
+# the pay periods fall and timing of the end of the class would give a least $50 a month budget.
 # It can link directly to Github and poll from the repoosatory.
 # They also allow us to create Droplets which are Virtual Machines with Mysql support.
 # For set up I just need to email them a team invite and tehen they can set up their account. 
 #
-# Rodrigo will have to create the Web app so that they can link the github reposatory to it. I have made him an owner so he should have permitions to do so. Looking through options the basic plan with 1GB ram should be enough for our needs (we ca discuss this when going over sprint 2) which runs $10 a month which we have the $200 from github eduction so should be fine. Guide https://www.youtube.com/watch?v=RYIiIZ2GvdM
+# Rodrigo will have to create the Web app so that they can link the github reposatory to it. I have made him an owner
+# so he should have permitions to do so. Looking through options the basic plan with 1GB ram should be enough for our
+# needs (we ca discuss this when going over sprint 2) which runs $10 a month which we have the $200 from github eduction
+# so should be fine. Guide https://www.youtube.com/watch?v=RYIiIZ2GvdM
 # 
-# Under the database tab we can create and link a database to the web app. A database would is $15 dollars so again should be fine. 
+# Under the database tab we can create and link a database to the web app. A database would is $15 dollars so again
+# should be fine. 
