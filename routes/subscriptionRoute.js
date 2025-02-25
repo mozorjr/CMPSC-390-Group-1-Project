@@ -6,43 +6,44 @@ const dotenv = require('dotenv');
 // Load environment variables
 dotenv.config();
 
-const stripe = Stripe(process.env.sk_test_51QwFvuEOlUKfbOjhUeqB5HU7AYrXCm3U7AbkkEpyEyZsIiThBvjqMVtxb3lJPwvPzL6odc6EuarEpWymijuxmuuh00mQ4n13qt);
+// Initialize Stripe with your secret key from .env
+const stripe = Stripe(process.env.sk_test_51QwFvuEOlUKfbOjhUeqB5HU7AYrXCm3U7AbkkEpyEyZsIiThBvjqMVtxb3lJPwvPzL6odc6EuarEpWymijuxmuuh00mQ4n13qt); // Securely load Stripe secret key
 
 // Route to handle subscription creation
 router.post('/create-subscription', async (req, res) => {
-  const { paymentMethodId, plan } = req.body; // assuming plan is passed in request body (basic, advanced, pro)
+  const { paymentMethodId, plan, email } = req.body;
 
   try {
-    // Create a customer (if not already created)
-    const customer = await stripe.customers.create({
-      payment_method: paymentMethodId,
-      invoice_settings: { default_payment_method: paymentMethodId },
-    });
+    // Check if the customer already exists
+    let customer = await stripe.customers.list({ email });
+    if (customer.data.length === 0) {
+      customer = await stripe.customers.create({
+        email: email,
+        payment_method: paymentMethodId,
+        invoice_settings: { default_payment_method: paymentMethodId },
+      });
+    } else {
+      customer = customer.data[0]; // Use existing customer
+    }
 
-    // Define the price for each plan
-    let price;
+    // Define the Stripe Price ID for each plan dynamically
+    let priceId;
     if (plan === 'basic') {
-      price = 50; // Price for Basic plan ($50)
+      priceId = price_1QwTfcEOlUKfbOjhfkAzDE7b; // Replace with actual price ID for basic plan
     } else if (plan === 'advanced') {
-      price = 75; // Price for Advanced plan ($75)
+      priceId = price_1QwTftEOlUKfbOjhiXujD1zb; // Replace with actual price ID for advanced plan
     } else if (plan === 'pro') {
-      price = 100; // Price for Pro plan ($100)
+      priceId = price_1QwTgDEOlUKfbOjhO2ClVqVV; // Replace with actual price ID for pro plan
     } else {
       return res.status(400).send({ error: { message: "Invalid plan selected" } });
     }
 
-    // Create a subscription with the chosen plan price
+    // Create a subscription with the chosen price ID
     const subscription = await stripe.subscriptions.create({
       customer: customer.id,
       items: [
         {
-          price_data: {
-            currency: 'usd', // Currency for the price (USD in this case)
-            product_data: {
-              name: `${plan} Plan`, // Name of the plan (Basic, Advanced, Pro)
-            },
-            unit_amount: price * 100, // Stripe expects the amount in cents
-          },
+          price: priceId,  // Reference the Stripe Price ID here
         },
       ],
       expand: ['latest_invoice.payment_intent'],
