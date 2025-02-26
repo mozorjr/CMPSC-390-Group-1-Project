@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 11, 2025 at 08:06 AM
+-- Generation Time: Feb 26, 2025 at 04:53 AM
 -- Server version: 8.0.41-0ubuntu0.24.10.1
 -- PHP Version: 8.3.11
 
@@ -44,6 +44,17 @@ INSERT INTO `App` (`AppID`, `AppVersion`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Stand-in structure for view `AvgStepsPerUser`
+-- (See below for the actual view)
+--
+CREATE TABLE `AvgStepsPerUser` (
+`UserID` int unsigned
+,`AvgSteps` decimal(14,4)
+);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `ConnectsTo`
 --
 
@@ -52,15 +63,6 @@ CREATE TABLE `ConnectsTo` (
   `UserID` int UNSIGNED NOT NULL,
   `AppID` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `ConnectsTo`
---
-
-INSERT INTO `ConnectsTo` (`ConnectID`, `UserID`, `AppID`) VALUES
-(1, 1, 1),
-(2, 2, 2),
-(3, 3, 3);
 
 -- --------------------------------------------------------
 
@@ -72,19 +74,25 @@ CREATE TABLE `UserData` (
   `DataID` int NOT NULL,
   `UserID` int UNSIGNED NOT NULL,
   `GenderValue` varchar(10) NOT NULL,
-  `HeightValue` decimal(5,2) NOT NULL,
-  `WeightValue` decimal(5,2) NOT NULL,
-  `AgeValue` int NOT NULL
+  `HeightValue` decimal(5,2) DEFAULT NULL,
+  `WeightValue` decimal(5,2) DEFAULT NULL,
+  `AgeValue` int DEFAULT NULL,
+  `AvgSteps` decimal(10,2) DEFAULT '0.00',
+  `Steps` int DEFAULT '0'
+) ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `UserLogs`
+--
+
+CREATE TABLE `UserLogs` (
+  `LogID` int NOT NULL,
+  `UserID` int UNSIGNED NOT NULL,
+  `Action` varchar(255) NOT NULL,
+  `Timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `UserData`
---
-
-INSERT INTO `UserData` (`DataID`, `UserID`, `GenderValue`, `HeightValue`, `WeightValue`, `AgeValue`) VALUES
-(1, 1, 'Male', 175.50, 70.20, 25),
-(2, 2, 'Female', 160.00, 58.00, 30),
-(3, 3, 'Male', 180.50, 85.40, 40);
 
 -- --------------------------------------------------------
 
@@ -99,17 +107,20 @@ CREATE TABLE `Users` (
   `Gender` varchar(10) NOT NULL,
   `Weight` decimal(5,2) NOT NULL,
   `UserName` varchar(255) NOT NULL,
-  `UserPasswordHash` text NOT NULL
+  `UserPasswordHash` varchar(255) NOT NULL,
+  `Email` varchar(255) NOT NULL,
+  `CreatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `UpdatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Dumping data for table `Users`
---
+-- --------------------------------------------------------
 
-INSERT INTO `Users` (`UserID`, `Height`, `Age`, `Gender`, `Weight`, `UserName`, `UserPasswordHash`) VALUES
-(1, 175.50, 25, 'Male', 70.20, 'testuser', 'hashedpassword123'),
-(2, 160.00, 30, 'Female', 58.00, 'janedoe', 'hashedpassword456'),
-(3, 180.50, 40, 'Male', 85.40, 'bobjones', 'hashedpassword789');
+--
+-- Structure for view `AvgStepsPerUser`
+--
+DROP TABLE IF EXISTS `AvgStepsPerUser`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `AvgStepsPerUser`  AS SELECT `UserData`.`UserID` AS `UserID`, avg(`UserData`.`Steps`) AS `AvgSteps` FROM `UserData` GROUP BY `UserData`.`UserID` ;
 
 --
 -- Indexes for dumped tables
@@ -134,6 +145,13 @@ ALTER TABLE `ConnectsTo`
 --
 ALTER TABLE `UserData`
   ADD PRIMARY KEY (`DataID`),
+  ADD KEY `UserID` (`UserID`);
+
+--
+-- Indexes for table `UserLogs`
+--
+ALTER TABLE `UserLogs`
+  ADD PRIMARY KEY (`LogID`),
   ADD KEY `UserID` (`UserID`);
 
 --
@@ -163,7 +181,13 @@ ALTER TABLE `ConnectsTo`
 -- AUTO_INCREMENT for table `UserData`
 --
 ALTER TABLE `UserData`
-  MODIFY `DataID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `DataID` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `UserLogs`
+--
+ALTER TABLE `UserLogs`
+  MODIFY `LogID` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `Users`
@@ -187,6 +211,12 @@ ALTER TABLE `ConnectsTo`
 --
 ALTER TABLE `UserData`
   ADD CONSTRAINT `UserData_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `Users` (`UserID`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `UserLogs`
+--
+ALTER TABLE `UserLogs`
+  ADD CONSTRAINT `UserLogs_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `Users` (`UserID`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
