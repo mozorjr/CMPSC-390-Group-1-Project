@@ -3,8 +3,6 @@ import stripe
 
 app = Flask(__name__)
 
-# Set your secret key. Remember to switch to your live secret key in production!
-# See your keys here: https://dashboard.stripe.com/apikeys
 stripe.api_key = 'sk_test_51QwFvuEOlUKfbOjhUeqB5HU7AYrXCm3U7AbkkEpyEyZsIiThBvjqMVtxb3lJPwvPzL6odc6EuarEpWymijuxmuuh00mQ4n13qt'
 
 @app.route("/")
@@ -18,7 +16,7 @@ def checkout():
 @app.route("/create-checkout-session", methods=["POST"])
 def create_checkout_session():
     try:
-        # Create a new Stripe Checkout Session for the subscription
+        # Stripe Checkout Session for the subscription
         session = stripe.checkout.Session.create(
             payment_method_types=['card'],
             line_items=[
