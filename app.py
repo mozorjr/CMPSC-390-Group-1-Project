@@ -13,7 +13,7 @@ app = Flask(__name__)
 STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY')
 STRIPE_PUBLISHABLE_KEY = os.getenv('STRIPE_PUBLISHABLE_KEY')
 
-# Stripe with your secret key
+# Stripe secret key
 stripe.api_key = STRIPE_SECRET_KEY
 
 # URL to redirect after successful payment
@@ -56,7 +56,7 @@ def create_checkout_session():
                         'Simple': 1500    # $15.00 for Simple plan
                     }[plan],  # Amount in cents (so 3000 means $30.00)
                 },
-                'quantity': 1,  # Quantity for the plan (we assume 1 for now)
+                'quantity': 1,  # Quantity for the plan 
             }],
             mode='payment',  # Mode of payment (for a one-time payment)
             success_url=f'{YOUR_DOMAIN}/success',  # Redirect URL after successful payment
