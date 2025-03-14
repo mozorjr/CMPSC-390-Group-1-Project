@@ -72,12 +72,12 @@ def create_checkout_session():
 # Route for successful payment
 @app.route('/success')
 def success():
-    return 'Payment succeeded! Thank you for subscribing.'
+    return 'Payment succeeded! Thank you for your subscription.'
 
 # Route for canceled payment
 @app.route('/cancel')
 def cancel():
-    return 'Payment canceled. Please try again.'
+    return 'Payment canceled. Please try again!'
 
 # Run the Flask application
 if __name__ == '__main__':
