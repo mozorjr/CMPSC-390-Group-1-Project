@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout Page</title>
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <h1>Checkout Page</h1>
+    <p>Select a subscription plan:</p>
+    
+    <button onclick="checkout('Premium')">Premium - $30</button>
+    <button onclick="checkout('Basic')">Basic - $50</button>
+    <button onclick="checkout('Simple')">Simple - $15</button>
+
+    <script>
+        const stripe = Stripe("{{ publishable_key }}");  // Stripe publishable key passed from Flask
+
+        function checkout(plan) {
+            fetch('/create-checkout-session', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ plan: plan }),
+            })
+            .then(response => response.json())
+            .then(session => {
+                return stripe.redirectToCheckout({ sessionId: session.id });
+            })
+            .then(result => {
+                if (result.error) {
+                    alert(result.error.message);
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+        }
+    </script>
+</body>
+</html>

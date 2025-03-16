@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Initialize Flask app
-app = Flask(__name__)
+app = Flask(__name__, template_folder="front-end/code")
 
 # secret and publishable keys from environment variables
 STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY')
@@ -27,9 +27,17 @@ product_ids = {
 }
 
 # Route to render the checkout page
-@app.route('/')
+@app.route('/purchase.html')
 def index():
     return render_template('checkout.html', publishable_key=STRIPE_PUBLISHABLE_KEY)
+
+@app.route("/")
+def home():
+    return render_template("index.html") 
+
+@app.route("/member.html")
+def member():
+    return render_template("member.html")
 
 # Route to create a checkout session
 @app.route('/create-checkout-session', methods=['POST'])
