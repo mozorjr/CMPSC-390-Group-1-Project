@@ -11,7 +11,7 @@
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <a class="btn btn-dark" href="main.html">Home</a>
+      <a class="btn btn-dark" href="index.html">Home</a>
       <div class="collapse navbar-collapse">
         <ul class="navbar-nav mx-auto">
           <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
@@ -20,7 +20,7 @@
           <li class="nav-item"><a class="nav-link" href="whyUs.html">Why Us</a></li>
           <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
         </ul>
-        <a class="btn btn-dark" href="log.html">Login / Signup</a>
+        <a class="btn btn-dark" href="login.html">Login / Signup</a>
       </div>
     </div>
   </nav>
@@ -40,55 +40,127 @@
                 <div class="p-3 bg-light rounded shadow">
                     <a class="btn btn-dark btn-lg mb-3" href="member.html">Basic</a>
                     <p>$9.99/Month</p>
-                    <ul class="list-unstyled">
-                        <li>12-Month Commitment</li>
-                        <li>Basic Features</li>
-                        <li>$50 Enrollment Fee</li>
-                    </ul>
+                    
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="p-3 bg-light rounded shadow">
                     <a class="btn btn-dark btn-lg mb-3" href="purchase.html">Simple</a>
                     <p>$19.99/Month</p>
-                    <ul class="list-unstyled">
-                        <li>6-Month Commitment</li>
-                        <li>Limited Access to Features</li>
-                        <li>$30 Enrollment Fee</li>
-                    </ul>
+                    
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="p-3 bg-light rounded shadow">
                     <a class="btn btn-dark btn-lg mb-3" href="purchase.html">Premium</a>
                     <p>$29.99/Month</p>
-                    <ul class="list-unstyled">
-                        <li>Monthly Commitment</li>
-                        <li>All Features</li>
-                        <li>No Enrollment Fee</li>
-                    </ul>
+                    
                 </div>
             </div>
         </div>
     </section>
+    <section class="container my-5">
+        <h2 class="text-center fw-bold">Membership Comparison</h2>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>Basic</th>
+                    <th>Simple</th>
+                    <th>Premium</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Monthly Cost</td>
+                    <td>$9.99</td>
+                    <td>$19.99</td>
+                    <td>$29.99</td>
+                </tr>
+                <tr>
+                    <td>Commitment</td>
+                    <td>12 Months</td>
+                    <td>6 Months</td>
+                    <td>Monthly</td>
+                </tr>
+                <tr>
+                    <td>Enrollment Fee</td>
+                    <td>$50</td>
+                    <td>$30</td>
+                    <td>None</td>
+                </tr>
+                <tr>
+                    <td>Access to Features</td>
+                    <td>Basic</td>
+                    <td>Limited</td>
+                    <td>All Features</td>
+                </tr>
+                <tr>
+                    <td>Progress Tracking</td>
+                    <td>No</td>
+                    <td>Yes</td>
+                    <td>Yes</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
 
-          <footer class="bg-light py-4 mt-5">
-            <div class="container-fluid d-flex justify-content-between align-items-center">
-                <a class="btn btn-dark" href="main.html">Home</a>
-                <nav class="d-flex gap-3">
-                    <a href="whyUs.html" class="btn">Why Us</a>
-                    <a href="contact.html" class="btn">Contact Us</a>
-                </nav>
-                <div class="d-flex gap-3">
-                        <img src="image/Facebook_logo_(square).png" class="img-fluid" style="max-width: 30px;" alt="Facebook">
-                    </a>
-                        <img src="image/linkedin.png" class="img-fluid" style="max-width: 30px;" alt="LinkedIn">
-                    </a>
-                        <img src="image/Insta-Logo.png" class="img-fluid" style="max-width: 30px;" alt="Instagram">
-                    </a>
+    <section class="container my-5">
+        <h3 class="text-center mb-4">Exclusive Membership Perks</h3>
+        <ul class="list-group">
+          <li class="list-group-item">10% Off Your First Month</li>
+          <li class="list-group-item">Referral Program: Get $10 for each friend you refer!</li>
+          <li class="list-group-item">Exclusive Events & Workshops</li>
+          <li class="list-group-item">Access to Premium Content</li>
+        </ul>
+      </section>
+
+    <section class="bg-light py-5">
+        <div class="container">
+            <h3 class="fw-bold text-center mb-4">Have any questions or critiques</h3>
+            <form action="submit.html" method="POST">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Your Name</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
                 </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Your Email</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="message" class="form-label">Your Message</label>
+                    <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-dark">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <section class="container py-5 text-center">
+        <h3 class="fw-bold mb-4">30-Day Money-Back Guarantee</h3>
+        <p>If you're not satisfied with your membership within the first 30 days, we will refund your money. No questions asked.</p>
+      </section>
+
+      <footer class="foot bg-light py-4 mt-5">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+            <a class="btn btn-dark" href="index.html">Home</a>
+            <nav class="d-flex gap-3">
+                <a href="whyUs.html" class="btn">Why Us</a>
+                <a href="contact.html" class="btn">Contact Us</a>
+            </nav>
+            <div class="d-flex gap-3">
+                <a href="https://www.facebook.com/?stype=lo&flo=1&deoia=1&jlou=AfdjgGZOS83Ieqm0hmBi6nRSnGTFnPIg0QwQUkfn8PAQkKCD96hoN3jYiNbd3hWJl-w_fxz34f3OjXcnvltHSD4jO78MOHRtFU_ZZ9YpS4dHfA&smuh=24868&lh=Ac8iXpovKhmWYm_-UDk" target="_blank">
+                    <img src="Facebook_logo_(square).png" class="img-fluid" style="max-width: 30px;" alt="Facebook">
+            </a>
+            <a href="https://www.linkedin.com/in/health-horizon-825a80351" target="_blank">
+            <img src="linkedin.png" class="img-fluid" style="max-width: 30px;" alt="LinkedIn">
+                    </a>
+                    <a href="https://www.instagram.com/hea.lthhorizon/" target="_blank">
+                <img src="Insta-Logo.png" class="img-fluid" style="max-width: 30px;" alt="Instagram">
+                    </a>
             </div>
-        </footer>
+        </div>
+    </footer>
   </main>
 </body>
 </html>
