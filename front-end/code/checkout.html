@@ -10,9 +10,9 @@
     <h1>Checkout Page</h1>
     <p>Select a subscription plan:</p>
     
-    <button onclick="checkout('Premium')">Premium - $30</button>
-    <button onclick="checkout('Basic')">Basic - $50</button>
-    <button onclick="checkout('Simple')">Simple - $15</button>
+    <button onclick="checkout('Premium')">Premium</button>
+    <button onclick="checkout('Basic')">Basic</button>
+    <button onclick="checkout('Simple')">Simple</button>
 
     <script>
         const stripe = Stripe("{{ publishable_key }}");  // Stripe publishable key passed from Flask

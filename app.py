@@ -21,9 +21,9 @@ YOUR_DOMAIN = "http://127.0.0.1:5000"  # domain when in production
 
 # Define the product IDs for different plans
 product_ids = {
-    'Premium': 'prod_RpxkuJhY93sOJd',
-    'Basic': 'prod_RpxigSVwlGEnyM',
-    'Simple': 'prod_RpxjQLIFgwOPdo'
+    'Premium': 'prod_Rxcuy5W8D4Pimf',
+    'Basic': 'prod_RxcpPLhBRk45cs',
+    'Simple': 'prod_RxcsN6qkIjlGcA'
 }
 
 # Route to render the checkout page
@@ -31,13 +31,35 @@ product_ids = {
 def index():
     return render_template('checkout.html', publishable_key=STRIPE_PUBLISHABLE_KEY)
 
+# Route for the home page
 @app.route("/")
 def home():
     return render_template("index.html") 
 
+# Route for "About" page
+@app.route("/about.html")
+def about():
+    return render_template("about.html")
+
+# Route for "Memberships" page
 @app.route("/member.html")
 def member():
     return render_template("member.html")
+
+# Route for "Request a Trainer" page
+@app.route("/RT.html")
+def request_trainer():
+    return render_template("RT.html")
+
+# Route for "Why Us" page
+@app.route("/whyUs.html")
+def why_us():
+    return render_template("whyUs.html")
+
+# Route for "Contact Us" page
+@app.route("/contact.html")
+def contact():
+    return render_template("contact.html")
 
 # Route to create a checkout session
 @app.route('/create-checkout-session', methods=['POST'])
@@ -59,9 +81,9 @@ def create_checkout_session():
                     'currency': 'usd',  # Currency for the transaction
                     'product': product_ids[plan],  # Product ID from the plan
                     'unit_amount': {
-                        'Premium': 3000,  # $30.00 for Premium plan
-                        'Basic': 5000,    # $50.00 for Basic plan
-                        'Simple': 1500    # $15.00 for Simple plan
+                        'Premium': 2999,  # $29.99 for Premium plan
+                        'Basic': 999,    # $9.99 for Basic plan
+                        'Simple': 1999    # $19.99 for Simple plan
                     }[plan],  # Amount in cents (so 3000 means $30.00)
                 },
                 'quantity': 1,  # Quantity for the plan 
