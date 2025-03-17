@@ -110,5 +110,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             </div>
         </div>
     </footer>
+
+    <script>
+    function auth(event){
+      event.preventDefault();
+
+      var email=document.getElementById('email-input').value;
+      var password=document.getElementById('password-input').value;
+    
+      if(email==='admin@gmail.com' && password=== "12345678"){
+        localStorage.setItem("loggedIn", "true");
+          window.location.href = 'loged.html';
+      }
+      else{
+          alert("invalid info");
+          return;
+      }
+    }
+    </script>
 </body>
 
