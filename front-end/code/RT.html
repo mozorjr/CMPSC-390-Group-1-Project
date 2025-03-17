@@ -59,6 +59,7 @@
 </head>
 
 <body>
+
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
       <a class="btn btn-dark" href="index.html">Home</a>
@@ -135,3 +136,19 @@
   </main>
 </body>
 </html>
+
+        <script>
+          window.onload = function() {
+          let loggedIn = localStorage.getItem("loggedIn") === "true";
+          let signupBtn = document.getElementById("signup-btn");
+          let profileBtn = document.getElementById("profile-btn");
+      
+          if (loggedIn) {
+              signupBtn.classList.add("d-none"); // Hide Signup button
+              profileBtn.classList.remove("d-none"); // Show Profile icon
+          }
+      };
+      </script>
+    </main>
+</body>
+
