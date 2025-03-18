@@ -69,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <p id="error-message"></p>
 
-        <form method="post" id="form" class="mx-auto"style="max-width: 400px;">
+        <form onsubmit="auth(event)" id="form" class="mx-auto"style="max-width: 400px;">
           <div>
             <label for="email-input">
               <span>@</span>
