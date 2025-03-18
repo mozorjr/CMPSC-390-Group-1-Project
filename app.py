@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Initialize Flask app
-app = Flask(__name__, template_folder="front-end/code")
+app = Flask(__name__, template_folder="front-end/code", static_folder="static")
 
 # secret and publishable keys from environment variables
 STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY')
