@@ -49,7 +49,7 @@
         
         <div class="col-md-4 mb-4">
           <div class="p-4 bg-white rounded shadow">
-            <img src="image/trainer1.jpg" class="img-fluid rounded-circle mb-3" alt="Trainer 1">
+            <img src="{{url_for('static',filename='images/trainer1.jpg')}}" class="img-fluid rounded-circle mb-3" alt="Trainer 1">
             <h4>James Carter</h4>
             <p>Strength Training & Nutrition Expert</p>
           </div>
@@ -57,7 +57,7 @@
 
         <div class="col-md-4 mb-4">
           <div class="p-4 bg-white rounded shadow">
-            <img src="image/trainer2.jpg" class="img-fluid rounded-circle mb-3" alt="Trainer 2">
+            <img src="{{url_for('static',filename='images/trainer2.jpg')}}" class="img-fluid rounded-circle mb-3" alt="Trainer 2">
             <h4>Michael Hayes</h4>
             <p>Certified Yoga & Pilates Instructor</p>
           </div>
@@ -65,7 +65,7 @@
 
         <div class="col-md-4 mb-4">
           <div class="p-4 bg-white rounded shadow">
-            <img src="image/trainer3.jpg" class="img-fluid rounded-circle mb-3" alt="Trainer 3">
+            <img src="{{url_for('static',filename='images/trainer3.jpg')}}" class="img-fluid rounded-circle mb-3" alt="Trainer 3">
             <h4>Emily Davis</h4>
             <p>HIIT & Cardio Specialist</p>
           </div>
@@ -103,26 +103,26 @@
     </div>
   </section>
 
-  <footer class="bg-light py-4 mt-5">
-    <div class="container-fluid d-flex justify-content-between align-items-center">
-      <a class="btn btn-dark" href="index.html">Home</a>
-      <nav class="d-flex gap-3">
-        <a href="whyUs.html" class="btn">Why Us</a>
-        <a href="contact.html" class="btn">Contact Us</a>
-      </nav>
-      <div class="d-flex gap-3">
-        <a href="https://www.facebook.com" target="_blank">
-          <img src="image/Facebook_logo_(square).png" class="img-fluid" style="max-width: 30px;" alt="Facebook">
-        </a>
-        <a href="https://www.linkedin.com" target="_blank">
-          <img src="image/linkedin.png" class="img-fluid" style="max-width: 30px;" alt="LinkedIn">
-        </a>
-        <a href="https://www.instagram.com" target="_blank">
-          <img src="image/Insta-Logo.png" class="img-fluid" style="max-width: 30px;" alt="Instagram">
-        </a>
-      </div>
-    </div>
-  </footer>
+  <footer class="foot bg-light py-4 mt-5">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+            <a class="btn btn-dark" href="index.html">Home</a>
+            <nav class="d-flex gap-3">
+                <a href="whyUs.html" class="btn">Why Us</a>
+                <a href="contact.html" class="btn">Contact Us</a>
+            </nav>
+            <div class="d-flex gap-3">
+                <a href="https://www.facebook.com/?stype=lo&flo=1&deoia=1&jlou=AfdjgGZOS83Ieqm0hmBi6nRSnGTFnPIg0QwQUkfn8PAQkKCD96hoN3jYiNbd3hWJl-w_fxz34f3OjXcnvltHSD4jO78MOHRtFU_ZZ9YpS4dHfA&smuh=24868&lh=Ac8iXpovKhmWYm_-UDk" target="_blank">
+                    <img src="{{url_for('static',filename='images/Facebook_logo_(square).png')}}" class="img-fluid" style="max-width: 30px;" alt="Facebook">
+            </a>
+            <a href="https://www.linkedin.com/in/health-horizon-825a80351" target="_blank">
+            <img src="{{url_for('static',filename='images/linkedin.png')}}" class="img-fluid" style="max-width: 30px;" alt="LinkedIn">
+                    </a>
+                    <a href="https://www.instagram.com/hea.lthhorizon/" target="_blank">
+                <img src="{{url_for('static',filename='images/Insta-Logo.png')}}" class="img-fluid" style="max-width: 30px;" alt="Instagram">
+                    </a>
+            </div>
+        </div>
+    </footer>
   <script>
       window.onload = function() {
       let loggedIn = localStorage.getItem("loggedIn") === "true";
