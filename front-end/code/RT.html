@@ -40,7 +40,7 @@
         </div>
       </nav>
 
-    <script>
+     <script>
         function displayInfo() {
             var selectedOption = document.getElementById("choices").value;
             var infoDiv = document.getElementById("info");
@@ -50,24 +50,24 @@
             if (selectedOption === "option1") {
                 infoDiv.innerHTML = `
                     <img src="{{url_for('static',filename='images/trainer1.jpg')}}" alt="Trainer 1" class="img-fluid mb-3">
-                    <h4>Trainer Name 1</h4>
+                    <h4>James Carter</h4>
                     <p>Expert in Strength Training & Nutrition</p>
                 `;
             } else if (selectedOption === "option2") {
                 infoDiv.innerHTML = `
-                    <img src="{{url_for('static',filename='images/trainer2.jpg')}}" alt="Trainer 2" class="img-fluid mb-3">
-                    <h4>Trainer Name 2</h4>
+                    <img src="{{url_for('static',filename='images/trainer2.jpg')}}" class="img-fluid mb-3">
+                    <h4>Michael Hayes</h4>
                     <p>Certified Yoga & Pilates Instructor</p>
                 `;
             } else if (selectedOption === "option3") {
                 infoDiv.innerHTML = `
                     <img src="{{url_for('static',filename='images/trainer3.jpg')}}" alt="Trainer 3" class="img-fluid mb-3">
-                    <h4>Trainer Name 3</h4>
+                    <h4>Emily Davis</h4>
                     <p>Expert in Cardio & HIIT Workouts</p>
                 `;
             } else if (selectedOption === "option4") {
                 infoDiv.innerHTML = `
-                    <img src="{{url_for('static',filename='images/trainer4.jpg')}}" alt="Trainer 4">
+                    <img src="{{url_for('static',filename='images/trainer4.jpg')}}" alt="Trainer 4" class="img-fluid mb-3">
                     <h4>Trainer Name 4</h4>
                     <p>Specialist in Weight Loss & Nutrition</p>
                 `;
