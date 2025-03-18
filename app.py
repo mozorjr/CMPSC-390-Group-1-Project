@@ -61,6 +61,16 @@ def why_us():
 def contact():
     return render_template("contact.html")
 
+# Route for "Signup" page
+@app.route("/signup.html")
+def signup():
+    return render_template("signup.html")
+
+# Route for "Login" page
+@app.route("/login.php")
+def login():
+            return render_template("login.php")
+
 # Route to create a checkout session
 @app.route('/create-checkout-session', methods=['POST'])
 def create_checkout_session():
@@ -108,6 +118,7 @@ def success():
 @app.route('/cancel')
 def cancel():
     return 'Payment canceled. Please try again!'
+
 
 # Run the Flask application
 if __name__ == '__main__':
