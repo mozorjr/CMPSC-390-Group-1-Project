@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 26, 2025 at 04:53 AM
+-- Generation Time: Mar 18, 2025 at 07:44 PM
 -- Server version: 8.0.41-0ubuntu0.24.10.1
 -- PHP Version: 8.3.11
 
@@ -62,6 +62,18 @@ CREATE TABLE `ConnectsTo` (
   `ConnectID` int NOT NULL,
   `UserID` int UNSIGNED NOT NULL,
   `AppID` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ContactForm`
+--
+
+CREATE TABLE `ContactForm` (
+  `Token` varchar(255) NOT NULL,
+  `Name` varchar(255) NOT NULL,
+  `Email` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -139,6 +151,12 @@ ALTER TABLE `ConnectsTo`
   ADD PRIMARY KEY (`ConnectID`),
   ADD KEY `UserID` (`UserID`),
   ADD KEY `AppID` (`AppID`);
+
+--
+-- Indexes for table `ContactForm`
+--
+ALTER TABLE `ContactForm`
+  ADD PRIMARY KEY (`Token`);
 
 --
 -- Indexes for table `UserData`
