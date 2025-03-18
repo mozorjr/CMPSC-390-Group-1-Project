@@ -49,19 +49,19 @@
     
             if (selectedOption === "option1") {
                 infoDiv.innerHTML = `
-                    <img src="image/trainer1.jpg" alt="Trainer 1" class="img-fluid mb-3">
+                    <img src="{{url_for('static',filename='images/trainer1.jpg')}}" alt="Trainer 1" class="img-fluid mb-3">
                     <h4>James Carter</h4>
                     <p>Expert in Strength Training & Nutrition</p>
                 `;
             } else if (selectedOption === "option2") {
                 infoDiv.innerHTML = `
-                    <img src="image/trainer2.jpg" alt="Trainer 2" class="img-fluid mb-3">
+                    <img src="{{url_for('static',filename='images/trainer2.jpg')}}" class="img-fluid mb-3">
                     <h4>Michael Hayes</h4>
                     <p>Certified Yoga & Pilates Instructor</p>
                 `;
             } else if (selectedOption === "option3") {
                 infoDiv.innerHTML = `
-                    <img src="image/trainer3.jpg" alt="Trainer 3" class="img-fluid mb-3">
+                    <img src="{{url_for('static',filename='images/trainer3.jpg')}}" alt="Trainer 3" class="img-fluid mb-3">
                     <h4>Emily Davis</h4>
                     <p>Expert in Cardio & HIIT Workouts</p>
                 `;
