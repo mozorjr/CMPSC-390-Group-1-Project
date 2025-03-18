@@ -120,7 +120,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
       if(email==='admin@gmail.com' && password=== "12345678"){
         localStorage.setItem("loggedIn", "true");
-          window.location.href = 'loged.html';
+          window.location.href = 'index.html';
       }
       else{
           alert("invalid info");
