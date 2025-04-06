@@ -15,11 +15,12 @@
         <ul class="navbar-nav mx-auto">
           <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
           <li class="nav-item"><a class="nav-link" href="member.html">Memberships</a></li>
+          <li class="nav-item"><a class="nav-link" href="calorie_tracker.html">Calorie Tracker</a></li>
           <li class="nav-item"><a class="nav-link" href="RT.html">Request a Trainer</a></li>
           <li class="nav-item"><a class="nav-link" href="whyUs.html">Why Us</a></li>
           <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
         </ul>
-        <a class="btn btn-dark" href="login.html">Login / Signup</a>
+        <a class="btn btn-dark" href="signup.html" id="signup-btn">Signup</a>
       </div>
     </div>
   </nav>
@@ -104,25 +105,25 @@
   </section>
 
   <footer class="foot bg-light py-4 mt-5">
-        <div class="container-fluid d-flex justify-content-between align-items-center">
-            <a class="btn btn-dark" href="index.html">Home</a>
-            <nav class="d-flex gap-3">
-                <a href="whyUs.html" class="btn">Why Us</a>
-                <a href="contact.html" class="btn">Contact Us</a>
-            </nav>
-            <div class="d-flex gap-3">
-                <a href="https://www.facebook.com/?stype=lo&flo=1&deoia=1&jlou=AfdjgGZOS83Ieqm0hmBi6nRSnGTFnPIg0QwQUkfn8PAQkKCD96hoN3jYiNbd3hWJl-w_fxz34f3OjXcnvltHSD4jO78MOHRtFU_ZZ9YpS4dHfA&smuh=24868&lh=Ac8iXpovKhmWYm_-UDk" target="_blank">
-                    <img src="{{url_for('static',filename='images/Facebook_logo_(square).png')}}" class="img-fluid" style="max-width: 30px;" alt="Facebook">
-            </a>
-            <a href="https://www.linkedin.com/in/health-horizon-825a80351" target="_blank">
-            <img src="{{url_for('static',filename='images/linkedin.png')}}" class="img-fluid" style="max-width: 30px;" alt="LinkedIn">
-                    </a>
-                    <a href="https://www.instagram.com/hea.lthhorizon/" target="_blank">
-                <img src="{{url_for('static',filename='images/Insta-Logo.png')}}" class="img-fluid" style="max-width: 30px;" alt="Instagram">
-                    </a>
-            </div>
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+        <a class="btn btn-dark" href="index.html">Home</a>
+        <nav class="d-flex gap-3">
+            <a href="whyUs.html" class="btn">Why Us</a>
+            <a href="contact.html" class="btn">Contact Us</a>
+        </nav>
+        <div class="d-flex gap-3">
+            <a href="https://www.facebook.com/?stype=lo&flo=1&deoia=1&jlou=AfdjgGZOS83Ieqm0hmBi6nRSnGTFnPIg0QwQUkfn8PAQkKCD96hoN3jYiNbd3hWJl-w_fxz34f3OjXcnvltHSD4jO78MOHRtFU_ZZ9YpS4dHfA&smuh=24868&lh=Ac8iXpovKhmWYm_-UDk" target="_blank">
+                <img src="{{url_for('static',filename='images/Facebook_logo_(square).png')}}" style="max-width: 30px;" alt="Facebook">
+        </a>
+        <a href="https://www.linkedin.com/in/health-horizon-825a80351" target="_blank">
+        <img src="{{url_for('static',filename='images/linkedin.png')}}" style="max-width: 30px;" alt="LinkedIn">
+                </a>
+                <a href="https://www.instagram.com/hea.lthhorizon/" target="_blank">
+            <img src="{{url_for('static',filename='images/Insta-Logo.png')}}" style="max-width: 30px;" alt="Instagram">
+                </a>
         </div>
-    </footer>
+    </div>
+</footer>
   <script>
       window.onload = function() {
       let loggedIn = localStorage.getItem("loggedIn") === "true";

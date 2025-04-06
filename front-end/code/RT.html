@@ -28,6 +28,7 @@
             <ul class="navbar-nav mx-auto">
               <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
               <li class="nav-item"><a class="nav-link" href="member.html">Memberships</a></li>
+              <li class="nav-item"><a class="nav-link" href="calorie_tracker.html">Calorie Tracker</a></li>
               <li class="nav-item"><a class="nav-link" href="RT.html">Request a Trainer</a></li>
               <li class="nav-item"><a class="nav-link" href="whyUs.html">Why Us</a></li>
               <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
@@ -67,7 +68,7 @@
                 `;
             } else if (selectedOption === "option4") {
                 infoDiv.innerHTML = `
-                    <img src="image/trainer4.jpg" alt="Trainer 4" class="img-fluid mb-3">
+                    <img src="{{url_for('static',filename='images/trainer4.jpg')}}" alt="Trainer 4" class="img-fluid mb-3">
                     <h4>Trainer Name 4</h4>
                     <p>Specialist in Weight Loss & Nutrition</p>
                 `;
@@ -82,7 +83,7 @@
         <section class="text-center mt-5">
           <h2 class="fw-bold mb-5">Request A Trainer</h2>
           <div class="image-container">
-            <img src="{{url_for('static',filename='images/rtimg.jpg')}}" alt="RT Image">
+            <img src="{{url_for('static',filename='images/rtimg.jpg')}}" alt="RT Image" class ="img-fluid">
       </section>
       <section class="bg-light py-5 mt-5">
         <div class="container d-flex flex-column flex-md-row align-items-center">
