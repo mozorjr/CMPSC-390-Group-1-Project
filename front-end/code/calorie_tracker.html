@@ -8,38 +8,64 @@
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <style>
-        /* Ensures full height and spacing between navbar and calorie tracker */
         body, html {
             height: 100%;
             margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
         }
 
-        /* Keep navbar fixed on top */
         .navbar {
             position: fixed;
             top: 0;
+            left: 0;
             width: 100%;
-            z-index: 1000; /* Ensures the navbar stays on top */
+            z-index: 1000;
         }
 
-        /* Adds padding to the body so the content is not hidden behind the navbar */
         .content {
-            margin-top: 70px; /* Adjust this depending on navbar height */
+            flex: 1;
+            margin-top: 80px;
             display: flex;
             justify-content: center;
-            align-items: center;
-            height: calc(100vh - 70px); /* Adjusts the height of the content area */
+            align-items: flex-start;
             padding: 20px;
         }
 
-        /* Centers the tracker form */
         .calorie-tracker-box {
             width: 100%;
-            max-width: 500px; /* Set max width for better responsiveness */
+            max-width: 500px;
             padding: 40px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             background-color: white;
             border-radius: 8px;
+        }
+
+        footer {
+            background-color: #f8f9fa;
+            padding: 20px;
+            margin-top: auto;
+            width: 100%;
+        }
+
+        .foot {
+            background-color: #f8f9fa;
+        }
+
+        .footer-links a {
+            margin-right: 10px;
+        }
+
+        @media (max-width: 576px) {
+            .calorie-tracker-box {
+                padding: 20px;
+            }
+
+            footer .container-fluid {
+                flex-direction: column;
+                align-items: center;
+            }
         }
     </style>
 </head>
@@ -118,11 +144,70 @@
 
             <div id="calories-result" style="display:none; margin-top: 20px;">
                 <h3>Your Recommended Daily Calorie Intake: <span id="calories"></span> kcal</h3>
+                
             </div>
+
+            <!-- Burned Calories Input -->
+            <h4 class="mt-4">Burned Calories through Exercise</h4>
+            <form id="exercise-form">
+                <div class="mb-3">
+                    <label for="exercise-type" class="form-label">Exercise Type:</label>
+                    <select id="exercise-type" class="form-control">
+                        <option value="running">Running</option>
+                        <option value="cycling">Cycling</option>
+                        <option value="swimming">Swimming</option>
+                        <option value="walking">Walking</option>
+                        <option value="tennis">Tennis</option>
+                        <option value="basketball">Basketball</option>
+                        <option value="soccer">Soccer</option>
+                        <option value="football">Football</option>
+                        <option value="volleyball">Volleyball</option>
+                        <option value="badminton">Badminton</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="exercise-duration" class="form-label">Duration (minutes):</label>
+                    <input type="number" class="form-control" id="exercise-duration" required>
+                </div>
+                <button type="submit" class="btn btn-success w-100">Calculate Burned Calories</button>
+            </form>
+
+            <div id="exercise-result" style="display:none; margin-top: 20px;">
+                <h3>Calories Burned: <span id="burned-calories"></span> kcal</h3>
+            </div>
+
+            <!-- Subtract Burned Calories Button -->
+            <button id="subtract-burned-calories-btn" class="btn btn-warning w-100 mt-3" style="display:none;">Subtract Burned Calories from Recommended Intake</button>
+            <h4>Your Remaining Calories After Exercise: <span id="remaining-calories"></span> kcal</h4>
         </div>
+        
     </section>
 
+    <footer class="foot bg-light py-4 mt-5">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+            <a class="btn btn-dark" href="index.html">Home</a>
+            <nav class="d-flex gap-3">
+                <a href="whyUs.html" class="btn">Why Us</a>
+                <a href="contact.html" class="btn">Contact Us</a>
+            </nav>
+            <div class="d-flex gap-3">
+                <a href="https://www.facebook.com/?stype=lo&flo=1&deoia=1&jlou=AfdjgGZOS83Ieqm0hmBi6nRSnGTFnPIg0QwQUkfn8PAQkKCD96hoN3jYiNbd3hWJl-w_fxz34f3OjXcnvltHSD4jO78MOHRtFU_ZZ9YpS4dHfA&smuh=24868&lh=Ac8iXpovKhmWYm_-UDk" target="_blank">
+                    <img src="{{url_for('static',filename='images/Facebook_logo_(square).png')}}" style="max-width: 30px;" alt="Facebook">
+            </a>
+            <a href="https://www.linkedin.com/in/health-horizon-825a80351" target="_blank">
+            <img src="{{url_for('static',filename='images/linkedin.png')}}" style="max-width: 30px;" alt="LinkedIn">
+                    </a>
+                    <a href="https://www.instagram.com/hea.lthhorizon/" target="_blank">
+                <img src="{{url_for('static',filename='images/Insta-Logo.png')}}" style="max-width: 30px;" alt="Instagram">
+                    </a>
+            </div>
+        </div>
+    </footer>
+
     <script>
+        let recommendedCalories = 0;
+        let burnedCalories = 0;
+
         document.getElementById('calorie-form').addEventListener('submit', function(e) {
             e.preventDefault();
 
@@ -133,52 +218,73 @@
             const goal = document.getElementById('goal').value;
             const targetWeight = parseFloat(document.getElementById('target-weight').value);
 
-            // Send data to backend for calorie calculation
-            fetch('/calculate_calories', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    height: height,
-                    weight: weight,
-                    age: age,
-                    gender: gender
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.calories) {
-                    let recommendedCalories = data.calories;
+            if (isNaN(height) || isNaN(weight) || isNaN(age)) {
+                alert('Please enter valid numbers for height, weight, and age');
+                return;
+            }
 
-                    // Adjust calorie intake based on goal (lose/gain weight)
-                    if (goal === 'lose') {
-                        recommendedCalories *= 0.8;  // Reduce by 20% for weight loss
-                    } else if (goal === 'gain') {
-                        recommendedCalories *= 1.2;  // Increase by 20% for weight gain
-                    }
+            // Mifflin-St Jeor BMR formula
+            let BMR;
+            if (gender === 'male') {
+                BMR = 10 * weight + 6.25 * height - 5 * age + 5;
+            } else {
+                BMR = 10 * weight + 6.25 * height - 5 * age - 161;
+            }
 
-                    // If target weight is provided, calculate based on target weight
-                    if (targetWeight && targetWeight !== weight) {
-                        const weightDifference = targetWeight - weight;
-                        const calorieAdjustment = weightDifference > 0 ? 500 : -500;  // Adjust by 500 kcal for each kg difference
-                        recommendedCalories += calorieAdjustment;
+            // Adjust calorie intake based on goal
+            recommendedCalories = BMR * 1.2; // Sedentary activity level by default
 
-                        // Ensure a reasonable calorie range
-                        if (recommendedCalories < 1200) recommendedCalories = 1200;
-                        if (recommendedCalories > 3500) recommendedCalories = 3500;
-                    }
+            if (goal === 'lose') {
+                recommendedCalories *= 0.8;  // Reduce by 20% for weight loss
+            } else if (goal === 'gain') {
+                recommendedCalories *= 1.2;  // Increase by 20% for weight gain
+            }
 
-                    document.getElementById('calories').textContent = recommendedCalories.toFixed(0);
-                    document.getElementById('calories-result').style.display = 'block';
-                } else {
-                    alert('Error calculating calories!');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('An error occurred. Please try again.');
-            });
+            if (targetWeight && targetWeight !== weight) {
+                const weightDifference = targetWeight - weight;
+                const calorieAdjustment = weightDifference > 0 ? 500 : -500;
+                recommendedCalories += calorieAdjustment;
+            }
+
+            document.getElementById('calories').textContent = recommendedCalories.toFixed(0);
+            document.getElementById('calories-result').style.display = 'block';
+            document.getElementById('subtract-burned-calories-btn').style.display = 'block';
+        });
+
+        document.getElementById('exercise-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const exerciseType = document.getElementById('exercise-type').value;
+            const duration = parseInt(document.getElementById('exercise-duration').value);
+
+            if (isNaN(duration) || duration <= 0) {
+                alert('Please enter a valid duration for the exercise');
+                return;
+            }
+
+            let caloriesPerMinute = 0;
+
+            switch (exerciseType) {
+                case 'running': caloriesPerMinute = 13; break;
+                case 'cycling': caloriesPerMinute = 11; break;
+                case 'swimming': caloriesPerMinute = 14; break;
+                case 'walking': caloriesPerMinute = 4; break;
+                case 'tennis': caloriesPerMinute = 7; break;
+                case 'basketball': caloriesPerMinute = 10; break;
+                case 'soccer': caloriesPerMinute = 9; break;
+                case 'football': caloriesPerMinute = 12; break;
+                case 'volleyball': caloriesPerMinute = 5; break;
+                case 'badminton': caloriesPerMinute = 6; break;
+            }
+
+            burnedCalories = caloriesPerMinute * duration;
+            document.getElementById('burned-calories').textContent = burnedCalories.toFixed(0);
+            document.getElementById('exercise-result').style.display = 'block';
+        });
+
+        document.getElementById('subtract-burned-calories-btn').addEventListener('click', function() {
+            const remainingCalories = recommendedCalories - burnedCalories;
+            document.getElementById('remaining-calories').textContent = remainingCalories.toFixed(0);
         });
     </script>
 </body>
