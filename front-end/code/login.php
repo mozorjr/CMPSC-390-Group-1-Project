@@ -39,9 +39,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       <a class="btn btn-dark" href="index.html">Home</a>
       <div class="collapse navbar-collapse">
         <ul class="navbar-nav mx-auto">
-          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+        <li classsss="nav-item"><a class="nav-link" href="about.html">About</a></li>
           <li class="nav-item"><a class="nav-link" href="member.html">Memberships</a></li>
+          <li class="nav-item"><a class="nav-link" href="calorie_tracker.html">Calorie Tracker</a></li>
           <li class="nav-item"><a class="nav-link" href="RT.html">Request a Trainer</a></li>
+          <li class="nav-item"><a class="nav-link" href="gymmap.html">Gyms</a></li>
           <li class="nav-item"><a class="nav-link" href="whyUs.html">Why Us</a></li>
           <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
         </ul>

@@ -163,3 +163,27 @@ form .form-control {
     margin-top: 20px;
 }
 
+#mapContainer {
+    margin-top: 80px;
+    align-self: center;
+  }
+
+#map {
+    margin-left: 40px;
+    margin-right: 40px;
+    height: 300px; 
+    width: 40%; 
+    float: left;
+}
+
+#mapText {
+    font-size: 20px;
+    margin-right: 40px;
+    align-self: right;
+    margin-bottom: 40px;
+}
+h8 {
+    align-self: right;
+    font-size:  30px;
+    margin-left: 10%;
+}
