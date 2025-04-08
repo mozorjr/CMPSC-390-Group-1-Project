@@ -100,25 +100,26 @@
     <section class="content">
         <div class="calorie-tracker-box p-4 shadow-sm rounded">
             <h1 class="text-center mb-4">Calorie Tracker</h1>
-            <form id="calorie-form">
+            <form id="calorie-form" method="POST" action="submit_data.php">
+
                 <div class="mb-3">
                     <label for="height" class="form-label">Height (cm):</label>
-                    <input type="number" class="form-control" id="height" required>
+                    <input type="number" class="form-control" id="height" name="height" required>
                 </div>
 
                 <div class="mb-3">
                     <label for="weight" class="form-label">Current Weight (kg):</label>
-                    <input type="number" class="form-control" id="weight" required>
+                    <input type="number" class="form-control" id="weight" name="weight" required>
                 </div>
 
                 <div class="mb-3">
                     <label for="age" class="form-label">Age (years):</label>
-                    <input type="number" class="form-control" id="age" required>
+                    <input type="number" class="form-control" id="age" name="age" required>
                 </div>
 
                 <div class="mb-3">
                     <label for="gender" class="form-label">Gender:</label>
-                    <select id="gender" class="form-control">
+                    <select id="gender" class="form-control" name="gender">
                         <option value="male">Male</option>
                         <option value="female">Female</option>
                     </select>
@@ -126,7 +127,7 @@
 
                 <div class="mb-3">
                     <label for="goal" class="form-label">Goal:</label>
-                    <select id="goal" class="form-control">
+                    <select id="goal" class="form-control" name="goal">
                         <option value="maintain">Maintain Weight</option>
                         <option value="lose">Lose Weight</option>
                         <option value="gain">Gain Weight</option>
@@ -135,52 +136,17 @@
 
                 <div class="mb-3">
                     <label for="target-weight" class="form-label">Target Weight (kg):</label>
-                    <input type="number" class="form-control" id="target-weight">
+                    <input type="number" class="form-control" id="target-weight" name="target_weight">
                     <small class="form-text text-muted">Leave empty if you wish to maintain current weight.</small>
                 </div>
 
-                <button type="submit" class="btn btn-primary w-100">Calculate Calories</button>
+                <button type="button" class="btn btn-primary w-100" onclick="calculateCalories()">Calculate Calories</button>
             </form>
 
             <div id="calories-result" style="display:none; margin-top: 20px;">
                 <h3>Your Recommended Daily Calorie Intake: <span id="calories"></span> kcal</h3>
-                
             </div>
-
-            <!-- Burned Calories Input -->
-            <h4 class="mt-4">Burned Calories through Exercise</h4>
-            <form id="exercise-form">
-                <div class="mb-3">
-                    <label for="exercise-type" class="form-label">Exercise Type:</label>
-                    <select id="exercise-type" class="form-control">
-                        <option value="running">Running</option>
-                        <option value="cycling">Cycling</option>
-                        <option value="swimming">Swimming</option>
-                        <option value="walking">Walking</option>
-                        <option value="tennis">Tennis</option>
-                        <option value="basketball">Basketball</option>
-                        <option value="soccer">Soccer</option>
-                        <option value="football">Football</option>
-                        <option value="volleyball">Volleyball</option>
-                        <option value="badminton">Badminton</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label for="exercise-duration" class="form-label">Duration (minutes):</label>
-                    <input type="number" class="form-control" id="exercise-duration" required>
-                </div>
-                <button type="submit" class="btn btn-success w-100">Calculate Burned Calories</button>
-            </form>
-
-            <div id="exercise-result" style="display:none; margin-top: 20px;">
-                <h3>Calories Burned: <span id="burned-calories"></span> kcal</h3>
-            </div>
-
-            <!-- Subtract Burned Calories Button -->
-            <button id="subtract-burned-calories-btn" class="btn btn-warning w-100 mt-3" style="display:none;">Subtract Burned Calories from Recommended Intake</button>
-            <h4>Your Remaining Calories After Exercise: <span id="remaining-calories"></span> kcal</h4>
         </div>
-        
     </section>
 
     <footer class="foot bg-light py-4 mt-5">
@@ -191,26 +157,21 @@
                 <a href="contact.html" class="btn">Contact Us</a>
             </nav>
             <div class="d-flex gap-3">
-                <a href="https://www.facebook.com/?stype=lo&flo=1&deoia=1&jlou=AfdjgGZOS83Ieqm0hmBi6nRSnGTFnPIg0QwQUkfn8PAQkKCD96hoN3jYiNbd3hWJl-w_fxz34f3OjXcnvltHSD4jO78MOHRtFU_ZZ9YpS4dHfA&smuh=24868&lh=Ac8iXpovKhmWYm_-UDk" target="_blank">
+                <a href="https://www.facebook.com" target="_blank">
                     <img src="{{url_for('static',filename='images/Facebook_logo_(square).png')}}" style="max-width: 30px;" alt="Facebook">
-            </a>
-            <a href="https://www.linkedin.com/in/health-horizon-825a80351" target="_blank">
-            <img src="{{url_for('static',filename='images/linkedin.png')}}" style="max-width: 30px;" alt="LinkedIn">
-                    </a>
-                    <a href="https://www.instagram.com/hea.lthhorizon/" target="_blank">
-                <img src="{{url_for('static',filename='images/Insta-Logo.png')}}" style="max-width: 30px;" alt="Instagram">
-                    </a>
+                </a>
+                <a href="https://www.linkedin.com" target="_blank">
+                    <img src="{{url_for('static',filename='images/linkedin.png')}}" style="max-width: 30px;" alt="LinkedIn">
+                </a>
+                <a href="https://www.instagram.com" target="_blank">
+                    <img src="{{url_for('static',filename='images/Insta-Logo.png')}}" style="max-width: 30px;" alt="Instagram">
+                </a>
             </div>
         </div>
     </footer>
 
     <script>
-        let recommendedCalories = 0;
-        let burnedCalories = 0;
-
-        document.getElementById('calorie-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-
+        function calculateCalories() {
             const height = parseFloat(document.getElementById('height').value);
             const weight = parseFloat(document.getElementById('weight').value);
             const age = parseInt(document.getElementById('age').value);
@@ -232,7 +193,7 @@
             }
 
             // Adjust calorie intake based on goal
-            recommendedCalories = BMR * 1.2; // Sedentary activity level by default
+            let recommendedCalories = BMR * 1.2; // Sedentary activity level by default
 
             if (goal === 'lose') {
                 recommendedCalories *= 0.8;  // Reduce by 20% for weight loss
@@ -246,46 +207,10 @@
                 recommendedCalories += calorieAdjustment;
             }
 
+            // Display the result
             document.getElementById('calories').textContent = recommendedCalories.toFixed(0);
             document.getElementById('calories-result').style.display = 'block';
-            document.getElementById('subtract-burned-calories-btn').style.display = 'block';
-        });
-
-        document.getElementById('exercise-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            const exerciseType = document.getElementById('exercise-type').value;
-            const duration = parseInt(document.getElementById('exercise-duration').value);
-
-            if (isNaN(duration) || duration <= 0) {
-                alert('Please enter a valid duration for the exercise');
-                return;
-            }
-
-            let caloriesPerMinute = 0;
-
-            switch (exerciseType) {
-                case 'running': caloriesPerMinute = 13; break;
-                case 'cycling': caloriesPerMinute = 11; break;
-                case 'swimming': caloriesPerMinute = 14; break;
-                case 'walking': caloriesPerMinute = 4; break;
-                case 'tennis': caloriesPerMinute = 7; break;
-                case 'basketball': caloriesPerMinute = 10; break;
-                case 'soccer': caloriesPerMinute = 9; break;
-                case 'football': caloriesPerMinute = 12; break;
-                case 'volleyball': caloriesPerMinute = 5; break;
-                case 'badminton': caloriesPerMinute = 6; break;
-            }
-
-            burnedCalories = caloriesPerMinute * duration;
-            document.getElementById('burned-calories').textContent = burnedCalories.toFixed(0);
-            document.getElementById('exercise-result').style.display = 'block';
-        });
-
-        document.getElementById('subtract-burned-calories-btn').addEventListener('click', function() {
-            const remainingCalories = recommendedCalories - burnedCalories;
-            document.getElementById('remaining-calories').textContent = remainingCalories.toFixed(0);
-        });
+        }
     </script>
 </body>
 </html>
