@@ -100,48 +100,47 @@
     <section class="content">
         <div class="calorie-tracker-box p-4 shadow-sm rounded">
             <h1 class="text-center mb-4">Calorie Tracker</h1>
-            <form id="calorie-form" method="POST" action="submit_data.php">
-
+            <form action="calorie_tracker.php" method="POST">
                 <div class="mb-3">
                     <label for="height" class="form-label">Height (cm):</label>
                     <input type="number" class="form-control" id="height" name="height" required>
                 </div>
-
+            
                 <div class="mb-3">
                     <label for="weight" class="form-label">Current Weight (kg):</label>
                     <input type="number" class="form-control" id="weight" name="weight" required>
                 </div>
-
+            
                 <div class="mb-3">
                     <label for="age" class="form-label">Age (years):</label>
                     <input type="number" class="form-control" id="age" name="age" required>
                 </div>
-
+            
                 <div class="mb-3">
                     <label for="gender" class="form-label">Gender:</label>
-                    <select id="gender" class="form-control" name="gender">
+                    <select id="gender" name="gender" class="form-control">
                         <option value="male">Male</option>
                         <option value="female">Female</option>
                     </select>
                 </div>
-
+            
                 <div class="mb-3">
                     <label for="goal" class="form-label">Goal:</label>
-                    <select id="goal" class="form-control" name="goal">
+                    <select id="goal" name="goal" class="form-control">
                         <option value="maintain">Maintain Weight</option>
                         <option value="lose">Lose Weight</option>
                         <option value="gain">Gain Weight</option>
                     </select>
                 </div>
-
+            
                 <div class="mb-3">
                     <label for="target-weight" class="form-label">Target Weight (kg):</label>
                     <input type="number" class="form-control" id="target-weight" name="target_weight">
                     <small class="form-text text-muted">Leave empty if you wish to maintain current weight.</small>
                 </div>
-
-                <button type="button" class="btn btn-primary w-100" onclick="calculateCalories()">Calculate Calories</button>
-            </form>
+            
+                <button type="submit" class="btn btn-primary w-100">Calculate Calories</button>
+            </form>            
 
             <div id="calories-result" style="display:none; margin-top: 20px;">
                 <h3>Your Recommended Daily Calorie Intake: <span id="calories"></span> kcal</h3>
@@ -156,61 +155,49 @@
                 <a href="whyUs.html" class="btn">Why Us</a>
                 <a href="contact.html" class="btn">Contact Us</a>
             </nav>
-            <div class="d-flex gap-3">
-                <a href="https://www.facebook.com" target="_blank">
-                    <img src="{{url_for('static',filename='images/Facebook_logo_(square).png')}}" style="max-width: 30px;" alt="Facebook">
-                </a>
-                <a href="https://www.linkedin.com" target="_blank">
-                    <img src="{{url_for('static',filename='images/linkedin.png')}}" style="max-width: 30px;" alt="LinkedIn">
-                </a>
-                <a href="https://www.instagram.com" target="_blank">
-                    <img src="{{url_for('static',filename='images/Insta-Logo.png')}}" style="max-width: 30px;" alt="Instagram">
-                </a>
-            </div>
         </div>
     </footer>
 
     <script>
-        function calculateCalories() {
-            const height = parseFloat(document.getElementById('height').value);
-            const weight = parseFloat(document.getElementById('weight').value);
-            const age = parseInt(document.getElementById('age').value);
+        document.querySelector('form').addEventListener('submit', function (event) {
+            event.preventDefault();  // Prevent the default form submission
+    
+            // Get the form values
+            const height = document.getElementById('height').value;
+            const weight = document.getElementById('weight').value;
+            const age = document.getElementById('age').value;
             const gender = document.getElementById('gender').value;
             const goal = document.getElementById('goal').value;
-            const targetWeight = parseFloat(document.getElementById('target-weight').value);
-
-            if (isNaN(height) || isNaN(weight) || isNaN(age)) {
-                alert('Please enter valid numbers for height, weight, and age');
-                return;
-            }
-
-            // Mifflin-St Jeor BMR formula
-            let BMR;
-            if (gender === 'male') {
-                BMR = 10 * weight + 6.25 * height - 5 * age + 5;
-            } else {
-                BMR = 10 * weight + 6.25 * height - 5 * age - 161;
-            }
-
-            // Adjust calorie intake based on goal
-            let recommendedCalories = BMR * 1.2; // Sedentary activity level by default
-
-            if (goal === 'lose') {
-                recommendedCalories *= 0.8;  // Reduce by 20% for weight loss
-            } else if (goal === 'gain') {
-                recommendedCalories *= 1.2;  // Increase by 20% for weight gain
-            }
-
-            if (targetWeight && targetWeight !== weight) {
-                const weightDifference = targetWeight - weight;
-                const calorieAdjustment = weightDifference > 0 ? 500 : -500;
-                recommendedCalories += calorieAdjustment;
-            }
-
-            // Display the result
-            document.getElementById('calories').textContent = recommendedCalories.toFixed(0);
-            document.getElementById('calories-result').style.display = 'block';
-        }
+            const targetWeight = document.getElementById('target-weight').value;
+    
+            // Prepare the data to send in the POST request
+            const formData = new FormData();
+            formData.append('height', height);
+            formData.append('weight', weight);
+            formData.append('age', age);
+            formData.append('gender', gender);
+            formData.append('goal', goal);
+            formData.append('target_weight', targetWeight);
+    
+            // Make an AJAX request to the backend (calorie_tracker.php)
+            fetch('calorie_tracker.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())  // Parse the JSON response
+            .then(data => {
+                // Show the recommended daily calorie intake
+                const calories = data.calories;
+                document.getElementById('calories').textContent = calories;
+                document.getElementById('calories-result').style.display = 'block';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('There was an error calculating your calories.');
+            });
+        });
     </script>
+    
 </body>
 </html>
+

@@ -3,99 +3,107 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Workout Log with Calendar</title>
-  
+  <title>Workout Log</title>
+
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
 
- <!-- FullCalendar v5 CSS -->
- <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css" rel="stylesheet" />
-  
   <style>
-    #calendar {
+    .container {
       max-width: 900px;
-      max-height: 900px;
       margin: 0 auto;
-      padding: 90px;
-      border: 1px solid #7c2929;
-      min-height: 500px;
     }
   </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-          <a class="btn btn-dark" href="index.html">Home</a>
-          <div class="collapse navbar-collapse">
-            <ul class="navbar-nav mx-auto">
-              <li classsss="nav-item"><a class="nav-link" href="about.html">About</a></li>
-              <li class="nav-item"><a class="nav-link" href="member.html">Memberships</a></li>
-              <li class="nav-item"><a class="nav-link" href="calorie_tracker.html">Calorie Tracker</a></li>
-              <li class="nav-item"><a class="nav-link" href="RT.html">Request a Trainer</a></li>
-              <li class="nav-item"><a class="nav-link" href="whyUs.html">Why Us</a></li>
-              <li class="nav-item"><a class="nav-link" href="gymmap.html">Gyms</a></li>
-              <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
-              <li class="nav-item d-none" id="sleep-tracker-nav"><a class="nav-link" href="sleepTracker.html">Sleep Tracker</a></li>
-              <li class="nav-item d-none" id="workout-tracker-nav"><a class="nav-link" href="workoutLog.html">Workout Tracker</a></li>
-            </ul>
-            <a class="btn btn-dark" href="signup.html" id="signup-btn">Signup</a>
-            <a href="profile.html" id="profile-btn" class="d-none">
-                <svg  xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#1f1f1f"><path d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Z"/></svg>
-            </a>
-          </div>
-        </div>
-      </nav>
-      
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="btn btn-dark" href="index.html">Home</a>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="member.html">Memberships</a></li>
+          <li class="nav-item"><a class="nav-link" href="calorie_tracker.html">Calorie Tracker</a></li>
+          <li class="nav-item"><a class="nav-link" href="RT.html">Request a Trainer</a></li>
+          <li class="nav-item"><a class="nav-link" href="whyUs.html">Why Us</a></li>
+          <li class="nav-item"><a class="nav-link" href="gymmap.html">Gyms</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
+          <li class="nav-item d-none" id="sleep-tracker-nav"><a class="nav-link" href="sleepTracker.html">Sleep Tracker</a></li>
+          <li class="nav-item d-none" id="workout-tracker-nav"><a class="nav-link" href="workoutLog.html">Workout Tracker</a></li>
+        </ul>
+        <a class="btn btn-dark" href="signup.html" id="signup-btn">Signup</a>
+        <a href="profile.html" id="profile-btn" class="d-none">
+          <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#1f1f1f"><path d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Z"/></svg>
+        </a>
+      </div>
+    </div>
+  </nav>
+  
   <div class="container mt-5">
     <h1 class="mb-4">Workout Log</h1>
 
-    <div id="calendar"></div>
-
+    <!-- Workout Form -->
     <form id="workout-form" class="mb-4">
       <div class="mb-3">
         <label for="exercise" class="form-label">Exercise Type</label>
-        <input type="text" class="form-control" id="exercise" placeholder="E.g., Running, Cycling" required />
+        <input type="text" class="form-control" id="exercise" name="exercise" placeholder="E.g., Running, Cycling" required />
       </div>
       <div class="mb-3">
         <label for="duration" class="form-label">Duration (minutes)</label>
-        <input type="number" class="form-control" id="duration" placeholder="E.g., 30" required />
+        <input type="number" class="form-control" id="duration" name="duration" placeholder="E.g., 30" required />
       </div>
       <div class="mb-3">
         <label for="calories-burned" class="form-label">Calories Burned</label>
-        <input type="number" class="form-control" id="calories-burned" placeholder="E.g., 250" required />
+        <input type="number" class="form-control" id="calories-burned" name="calories_burned" placeholder="E.g., 250" required />
+      </div>
+      <div class="mb-3">
+        <label for="workout-date" class="form-label">Workout Date</label>
+        <input type="date" class="form-control" id="workout-date" name="workout_date" required />
       </div>
       <button type="submit" class="btn btn-success">Add Workout</button>
     </form>
+  
 
-    <h4>Total Duration: <span id="total-duration">0</span> minutes</h4>
-    <h4>Total Calories Burned: <span id="total-calories">0</span> kcal</h4>
+    <h2>Logged Workouts</h2>
+    <table id="workout-table" class="table table-striped">
+      <thead>
+        <tr>
+          <th>Exercise</th>
+          <th>Duration (mins)</th>
+          <th>Calories Burned</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Workout logs will be displayed here -->
+      </tbody>
+    </table>
   </div>
 
   <footer class="foot bg-light py-4 mt-5">
     <div class="container-fluid d-flex justify-content-between align-items-center">
-        <a class="btn btn-dark" href="index.html">Home</a>
-        <nav class="d-flex gap-3">
-            <a href="whyUs.html" class="btn">Why Us</a>
-            <a href="contact.html" class="btn">Contact Us</a>
-        </nav>
-        <div class="d-flex gap-3">
-            <a href="https://www.facebook.com/?stype=lo&flo=1&deoia=1&jlou=AfdjgGZOS83Ieqm0hmBi6nRSnGTFnPIg0QwQUkfn8PAQkKCD96hoN3jYiNbd3hWJl-w_fxz34f3OjXcnvltHSD4jO78MOHRtFU_ZZ9YpS4dHfA&smuh=24868&lh=Ac8iXpovKhmWYm_-UDk" target="_blank">
-                <img src="Facebook_logo_(square).png" class="img-fluid" style="max-width: 30px;" alt="Facebook">
-        </a>
-        <a href="https://www.linkedin.com/in/health-horizon-825a80351" target="_blank">
-        <img src="linkedin.png" class="img-fluid" style="max-width: 30px;" alt="LinkedIn">
-                </a>
-                <a href="https://www.instagram.com/hea.lthhorizon/" target="_blank">
-            <img src="Insta-Logo.png" class="img-fluid" style="max-width: 30px;" alt="Instagram">
-                </a>
-        </div>
+      <a class="btn btn-dark" href="index.html">Home</a>
+      <nav class="d-flex gap-3">
+          <a href="whyUs.html" class="btn">Why Us</a>
+          <a href="contact.html" class="btn">Contact Us</a>
+      </nav>
+      <div class="d-flex gap-3">
+          <a href="https://www.facebook.com" target="_blank">
+              <img src="Facebook_logo_(square).png" class="img-fluid" style="max-width: 30px;" alt="Facebook">
+          </a>
+          <a href="https://www.linkedin.com" target="_blank">
+              <img src="linkedin.png" class="img-fluid" style="max-width: 30px;" alt="LinkedIn">
+          </a>
+          <a href="https://www.instagram.com" target="_blank">
+              <img src="Insta-Logo.png" class="img-fluid" style="max-width: 30px;" alt="Instagram">
+          </a>
+      </div>
     </div>
-</footer>
+  </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"></script>
-  <script src='https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js'></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
   <script>
-    window.onload = function () {
+     window.onload = function () {
     let loggedIn = localStorage.getItem("loggedIn") === "true";
     document.getElementById("signup-btn").classList.toggle("d-none", loggedIn);
     document.getElementById("profile-btn").classList.toggle("d-none", !loggedIn);
@@ -104,95 +112,75 @@
     loadSleepLogs(); 
     };
 
-    document.addEventListener('DOMContentLoaded', function() {
-      const calendarEl = document.getElementById('calendar');
-      const calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
-        selectable: true,
-        selectHelper: true,
-        events: [],
-        select: function(info) {
-          // When a date is selected on the calendar
-          const selectedDate = info.startStr;
-          alert('Selected date: ' + selectedDate);
-        },
-        eventClick: function(info) {
-          // When a workout event is clicked
-          alert('Workout on: ' + info.event.start.toISOString() + '\n' + info.event.title);
-        }
-      });
-      calendar.render();
-  
-      // Workout form submission
-      const form = document.getElementById('workout-form');
-      const totalDurationDisplay = document.getElementById('total-duration');
-      const totalCaloriesDisplay = document.getElementById('total-calories');
-      let totalDuration = 0;
-      let totalCalories = 0;
-      let selectedDate = null;
-  
-      form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const exercise = document.getElementById('exercise').value;
-        const duration = parseInt(document.getElementById('duration').value);
-        const caloriesBurned = parseInt(document.getElementById('calories-burned').value);
-  
-        if (exercise && !isNaN(duration) && !isNaN(caloriesBurned) && selectedDate) {
-          // Add workout as an event on the calendar
-          calendar.addEvent({
-            title: `${exercise} - ${duration} min - ${caloriesBurned} kcal`,
-            start: selectedDate,
-            allDay: true
-          });
-  
-          totalDuration += duration;
-          totalCalories += caloriesBurned;
-          totalDurationDisplay.textContent = totalDuration;
-          totalCaloriesDisplay.textContent = totalCalories;
-  
-          const animationDuration = 1.5 * 1000;
-          const animationEnd = Date.now() + animationDuration;
-          const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
-  
-          function randomInRange(min, max) {
-            return Math.random() * (max - min) + min;
-          }
-  
-          const interval = setInterval(function() {
-            const timeLeft = animationEnd - Date.now();
-  
-            if (timeLeft <= 0) {
-              return clearInterval(interval);
-            }
-  
-            const particleCount = 50 * (timeLeft / animationDuration);
-  
-            confetti(
-              Object.assign({}, defaults, {
-                particleCount,
-                origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
-              })
-            );
-            confetti(
-              Object.assign({}, defaults, {
-                particleCount,
-                origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
-              })
-            );
-          }, 250);
-  
-          form.reset();
-          selectedDate = null;
+$(document).ready(function () {
+  // Function to load workouts from the database
+  function loadWorkouts() {
+    $.get('workouts.php', function(data) {
+      let workouts = JSON.parse(data);
+      let tableBody = $('#workout-table tbody');
+      tableBody.empty(); // Clear the current workout logs
+
+      workouts.forEach(function(workout) {
+        // Check if workout_date exists and is a valid date
+        let workoutDate = workout.workout_date ? new Date(workout.workout_date) : null;
+
+        // Format the date to a readable format (MM/DD/YYYY)
+        if (workoutDate && !isNaN(workoutDate)) {
+          // Format the date as MM/DD/YYYY
+          workoutDate = workoutDate.toLocaleDateString('en-US'); // 'en-US' gives MM/DD/YYYY format
         } else {
-          alert('Please select a date on the calendar.');
+          workoutDate = 'No date available'; // Default message if no valid date
         }
-      });
-  
-      calendar.on('dateClick', function(info) {
-        selectedDate = info.dateStr;
+
+        // Append each workout entry to the table
+        tableBody.append(
+          `<tr>
+            <td>${workout.exercise}</td>
+            <td>${workout.duration}</td>
+            <td>${workout.calories_burned}</td>
+            <td>${workoutDate}</td> <!-- Display workout date here -->
+          </tr>`
+        );
       });
     });
+  }
+
+  // Call loadWorkouts function on page load
+  loadWorkouts();
+
+  // Handle form submission
+  $('#workout-form').on('submit', function(e) {
+    e.preventDefault();
+
+    // Get form values
+    let exercise = $('#exercise').val();
+    let duration = $('#duration').val();
+    let caloriesBurned = $('#calories-burned').val();
+    let workoutDate = $('#workout-date').val();
+
+    // Prepare new workout data
+    let newWorkout = {
+      exercise: exercise,
+      duration: parseInt(duration),
+      calories_burned: parseInt(caloriesBurned),
+      workout_date: workoutDate
+    };
+
+    // Append the new workout to the database using AJAX
+    $.ajax({
+      url: 'add_workout.php',
+      type: 'POST',
+      data: newWorkout,
+      success: function(response) {
+        loadWorkouts(); // Reload the workouts after adding a new one
+        $('#workout-form')[0].reset(); // Reset the form
+      }
+    });
+  });
+});
+
   </script>
-  
 </body>
 </html>
+
+
