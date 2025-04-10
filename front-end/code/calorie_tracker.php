@@ -1,6 +1,4 @@
 <?php
-// Include database connection (Make sure you have a database connection setup)
-// Example: include('db_connection.php');
 
 // Connect to your database
 $servername = "localhost";  // Replace with your database server
@@ -39,7 +37,7 @@ if ($goal == "maintain") {
     $calorieIntake = $bmr * 1.75; // Active for weight gain
 }
 
-// Optionally, save the result to a database (e.g., if you want to track user data)
+// Save the result to a database (e.g., if you want to track user data)
 $sql = "INSERT INTO calorie_results (height, weight, age, gender, goal, target_weight, calories) 
         VALUES ('$height', '$weight', '$age', '$gender', '$goal', '$target_weight', '$calorieIntake')";
 

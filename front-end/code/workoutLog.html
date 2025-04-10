@@ -58,7 +58,7 @@
       </div>
       <div class="mb-3">
         <label for="workout-date" class="form-label">Workout Date</label>
-        <input type="date" class="form-control" id="workout-date" name="workout_date" required />
+        <input type="date" class="form-control" id="workout-date" name="workout_date" placeholder= "2025-04-10" required />
       </div>
       <button type="submit" class="btn btn-success">Add Workout</button>
     </form>
@@ -71,7 +71,7 @@
           <th>Exercise</th>
           <th>Duration (mins)</th>
           <th>Calories Burned</th>
-          <th>Date</th>
+          <th>Workout Date</th>
         </tr>
       </thead>
       <tbody>
@@ -112,7 +112,7 @@
     loadSleepLogs(); 
     };
 
-$(document).ready(function () {
+    $(document).ready(function () {
   // Function to load workouts from the database
   function loadWorkouts() {
     $.get('workouts.php', function(data) {
@@ -121,26 +121,34 @@ $(document).ready(function () {
       tableBody.empty(); // Clear the current workout logs
 
       workouts.forEach(function(workout) {
+        // Log the raw workout_date to the console
+        console.log("Raw workout_date:", workout.workout_date);
+        
         // Check if workout_date exists and is a valid date
         let workoutDate = workout.workout_date ? new Date(workout.workout_date) : null;
 
+
         // Format the date to a readable format (MM/DD/YYYY)
         if (workoutDate && !isNaN(workoutDate)) {
-          // Format the date as MM/DD/YYYY
           workoutDate = workoutDate.toLocaleDateString('en-US'); // 'en-US' gives MM/DD/YYYY format
         } else {
           workoutDate = 'No date available'; // Default message if no valid date
         }
 
-        // Append each workout entry to the table
-        tableBody.append(
-          `<tr>
-            <td>${workout.exercise}</td>
-            <td>${workout.duration}</td>
-            <td>${workout.calories_burned}</td>
-            <td>${workoutDate}</td> <!-- Display workout date here -->
-          </tr>`
-        );
+
+        // Log the formatted workout_date
+        console.log("Formatted workout_date:", workoutDate);
+
+       // Append each workout entry to the table
+tableBody.append(
+  `<tr>
+    <td>${workout.exercise}</td>
+    <td>${workout.duration}</td>
+    <td>${workout.calories_burned}</td>
+    <td>${workoutDate}</td> <!-- Display formatted workout date here -->
+  </tr>`
+);
+
       });
     });
   }
@@ -160,22 +168,24 @@ $(document).ready(function () {
 
     // Prepare new workout data
     let newWorkout = {
-      exercise: exercise,
-      duration: parseInt(duration),
-      calories_burned: parseInt(caloriesBurned),
-      workout_date: workoutDate
-    };
+  exercise: $('#exercise').val(),
+  duration: parseInt($('#duration').val()),
+  calories_burned: parseInt($('#calories-burned').val()),
+  workout_date: $('#workout-date').val()
+};
 
-    // Append the new workout to the database using AJAX
-    $.ajax({
-      url: 'add_workout.php',
-      type: 'POST',
-      data: newWorkout,
-      success: function(response) {
-        loadWorkouts(); // Reload the workouts after adding a new one
-        $('#workout-form')[0].reset(); // Reset the form
-      }
-    });
+console.log("Sending workout data:", newWorkout); // 👈 Add this
+
+$.ajax({
+  url: 'add_workout.php',
+  type: 'POST',
+  data: newWorkout,
+  success: function(response) {
+    console.log("Response from PHP:", response); // 👈 Add this
+    loadWorkouts();
+    $('#workout-form')[0].reset();
+  }
+});
   });
 });
 
