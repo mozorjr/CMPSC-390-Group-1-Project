@@ -28,13 +28,13 @@
           <a class="btn btn-dark" href="index.html">Home</a>
           <div class="collapse navbar-collapse">
             <ul class="navbar-nav mx-auto">
-              <li classsss="nav-item"><a class="nav-link" href="about.html">About</a></li>
+              <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
               <li class="nav-item"><a class="nav-link" href="member.html">Memberships</a></li>
               <li class="nav-item"><a class="nav-link" href="RT.html">Request a Trainer</a></li>
               <li class="nav-item"><a class="nav-link" href="whyUs.html">Why Us</a></li>
               <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
               <li class="nav-item d-none" id="sleep-tracker-nav">
-                <a class="nav-link" href="sleepTracker.html">Sleep Tracker</a>
+                <a class="nav-link" href="sleepLog.html">Sleep Tracker</a>
             </li>
             <li class="nav-item d-none" id="workout-tracker-nav">
               <a class="nav-link" href="workoutLog.html">Workout Tracker</a>
@@ -53,18 +53,18 @@
 
     <div id="calendar"></div>
 
-    <form id="workout-form" class="mb-4">
+    <form id="workout-form" class="mb-4" action="WLdb.php" method="post">
       <div class="mb-3">
         <label for="exercise" class="form-label">Exercise Type</label>
-        <input type="text" class="form-control" id="exercise" placeholder="E.g., Running, Cycling" required />
+        <input type="text" class="form-control" id="exercise" placeholder="E.g., Running, Cycling" name="exercise" required />
       </div>
       <div class="mb-3">
         <label for="duration" class="form-label">Duration (minutes)</label>
-        <input type="number" class="form-control" id="duration" placeholder="E.g., 30" required />
+        <input type="number" class="form-control" id="duration" placeholder="E.g., 30" name="duration" required />
       </div>
       <div class="mb-3">
-        <label for="calories-burned" class="form-label">Calories Burned</label>
-        <input type="number" class="form-control" id="calories-burned" placeholder="E.g., 250" required />
+        <label for="calBurned" class="form-label">Calories Burned</label>
+        <input type="number" class="form-control" id="calBurned" placeholder="E.g., 250" name="calBurned" required />
       </div>
       <button type="submit" class="btn btn-success">Add Workout</button>
     </form>
@@ -106,6 +106,28 @@
     loadSleepLogs(); 
     };
 
+    //added
+    document.getElementById("workout-form").addEventListener("submit", function (e) {
+    e.preventDefault(); 
+
+    let formData = new FormData(this);
+
+    fetch("WLdb.php", {
+        method: "POST",
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            this.reset();
+            location.reset();
+        } else {
+            alert("Error: " + data.error);
+        }
+    })
+    .catch(error => console.error("Error:", error));
+});//added
+
     document.addEventListener('DOMContentLoaded', function() {
       const calendarEl = document.getElementById('calendar');
       const calendar = new FullCalendar.Calendar(calendarEl, {
@@ -116,7 +138,7 @@
         select: function(info) {
           // When a date is selected on the calendar
           const selectedDate = info.startStr;
-          alert('Selected date: ' + selectedDate);
+          //alert('Selected date: ' + selectedDate);
         },
         eventClick: function(info) {
           // When a workout event is clicked
@@ -186,7 +208,7 @@
           form.reset();
           selectedDate = null;
         } else {
-          alert('Please select a date on the calendar.');
+          //alert('Please select a date on the calendar.');
         }
       });
   
