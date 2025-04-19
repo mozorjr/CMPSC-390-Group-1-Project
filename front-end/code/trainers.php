@@ -1,7 +1,6 @@
 <?php
 require 'db.php';
 
-// Fetch all trainers
 $sql = "SELECT * FROM trainers";
 $result = $conn->query($sql);
 $trainers = [];
