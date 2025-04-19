@@ -1,5 +1,9 @@
 <?php
-require 'db.php'; 
+$host = "localhost";
+$dbname = "healthHorizon";
+$username = "root";
+$password = "";
+
 
 
 if (isset($_GET['id'])) {
