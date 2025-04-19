@@ -1,5 +1,8 @@
 <?php
-include('db.php');
+$host = "localhost";
+$dbname = "healthHorizon";
+$username = "root";
+$password = "";
 
 if (isset($_GET['trainer_id'])) {
     $trainer_id = $_GET['trainer_id'];
