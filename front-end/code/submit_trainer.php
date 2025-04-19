@@ -1,5 +1,8 @@
 <?php
-require 'db.php';
+$host = "localhost";
+$dbname = "healthHorizon";
+$username = "root";
+$password = "";
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
