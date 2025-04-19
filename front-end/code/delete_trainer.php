@@ -1,18 +1,18 @@
 <?php
-require 'db.php'; // Include your database connection
+require 'db.php'; 
 
-// Check if 'id' is passed in the URL
+
 if (isset($_GET['id'])) {
     $trainerId = $_GET['id'];
 
-    // Prepare the DELETE query
+   
     $stmt = $conn->prepare("DELETE FROM trainers WHERE id = ?");
-    $stmt->bind_param("i", $trainerId); // 'i' is for integer type
+    $stmt->bind_param("i", $trainerId); 
 
-    // Execute the query
+
     if ($stmt->execute()) {
         echo "Trainer deleted successfully.";
-        // Redirect to the trainers list page (or wherever you want to go after deletion)
+
         header("Location: trainers.php");
         exit();
     } else {
