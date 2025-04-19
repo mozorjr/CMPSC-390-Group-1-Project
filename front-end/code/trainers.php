@@ -1,5 +1,8 @@
 <?php
-require 'db.php';
+$host = "localhost";
+$dbname = "healthHorizon";
+$username = "root";
+$password = "";
 
 $sql = "SELECT * FROM trainers";
 $result = $conn->query($sql);
