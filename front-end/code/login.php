@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // Verify password
         if (password_verify($password, $user["UserPasswordHash"])) {
             $_SESSION["user_id"] = $user["UserID"];
-            header("Location: dashboard.php");
+            header("Location: sleepLog.html");
             exit;
         } else {
             $is_invalid = true;
