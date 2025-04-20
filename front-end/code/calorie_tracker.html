@@ -83,6 +83,7 @@
                     <li class="nav-item"><a class="nav-link" href="member.html">Memberships</a></li>
                     <li class="nav-item"><a class="nav-link" href="calorie_tracker.html">Calorie Tracker</a></li>
                     <li class="nav-item"><a class="nav-link" href="RT.html">Request a Trainer</a></li>
+                    <li class="nav-item"><a class="nav-link" href="gymmap.html">Gyms</a></li>
                     <li class="nav-item"><a class="nav-link" href="whyUs.html">Why Us</a></li>
                     <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
                 </ul>
@@ -181,20 +182,30 @@
     
             // Make an AJAX request to the backend (calorie_tracker.php)
             fetch('calorie_tracker.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())  // Parse the JSON response
-            .then(data => {
-                // Show the recommended daily calorie intake
-                const calories = data.calories;
-                document.getElementById('calories').textContent = calories;
-                document.getElementById('calories-result').style.display = 'block';
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('There was an error calculating your calories.');
-            });
+    method: 'POST',
+    body: formData
+})
+.then(async response => {
+    const text = await response.text();
+    console.log("Raw response:", text);  // Inspect what PHP returned
+    try {
+        const data = JSON.parse(text);
+        if (data.calories) {
+            document.getElementById('calories').textContent = data.calories;
+            document.getElementById('calories-result').style.display = 'block';
+        } else if (data.error) {
+            alert(data.error);
+        }
+    } catch (e) {
+        console.error('JSON parse error:', e);
+        alert("Invalid response from server.");
+    }
+})
+.catch(error => {
+    console.error('Fetch error:', error);
+    alert('There was an error calculating your calories.');
+});
+
         });
     </script>
     

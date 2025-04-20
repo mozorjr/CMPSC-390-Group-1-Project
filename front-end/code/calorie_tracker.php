@@ -1,58 +1,77 @@
 <?php
+header("Content-Type: application/json"); // Force JSON output
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-// Connect to your database
-$servername = "localhost";  // Replace with your database server
-$username = "root";         // Replace with your database username
-$password = "";             // Replace with your database password
-$dbname = "calorie_tracker"; // Replace with your database name
+// Use your existing database connection file
+$mysqli = require __DIR__ . "/database.php";
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+// Retrieve and sanitize form data via POST
+$height = $_POST['height'] ?? null;
+$weight = $_POST['weight'] ?? null;
+$age = $_POST['age'] ?? null;
+$gender = $_POST['gender'] ?? null;
+$goal = $_POST['goal'] ?? null;
+$target_weight = isset($_POST['target_weight']) && $_POST['target_weight'] !== '' ? floatval($_POST['target_weight']) : null;
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+
+// Check required fields
+if (!$height || !$weight || !$age || !$gender || !$goal) {
+    http_response_code(400);
+    echo json_encode(["error" => "Missing required fields."]);
+    exit;
 }
 
-// Retrieve form data via POST
-$height = $_POST['height'];
-$weight = $_POST['weight'];
-$age = $_POST['age'];
-$gender = $_POST['gender'];
-$goal = $_POST['goal'];
-$target_weight = isset($_POST['target_weight']) ? $_POST['target_weight'] : null;
-
 // Calculate BMR using the Harris-Benedict formula
-if ($gender == "male") {
+if ($gender === "male") {
     $bmr = 66.5 + (13.75 * $weight) + (5.003 * $height) - (6.75 * $age);
 } else {
     $bmr = 655 + (9.563 * $weight) + (1.850 * $height) - (4.676 * $age);
 }
 
 // Adjust calories based on the goal
-if ($goal == "maintain") {
-    $calorieIntake = $bmr * 1.55; // Moderately active for maintenance
-} elseif ($goal == "lose") {
-    $calorieIntake = $bmr * 1.2;  // Sedentary for weight loss
-} else {
-    $calorieIntake = $bmr * 1.75; // Active for weight gain
+switch ($goal) {
+    case "maintain":
+        $calorieIntake = $bmr * 1.55;
+        break;
+    case "lose":
+        $calorieIntake = $bmr * 1.2;
+        break;
+    case "gain":
+        $calorieIntake = $bmr * 1.75;
+        break;
+    default:
+        $calorieIntake = $bmr;
+        break;
 }
 
-// Save the result to a database (e.g., if you want to track user data)
-$sql = "INSERT INTO calorie_results (height, weight, age, gender, goal, target_weight, calories) 
-        VALUES ('$height', '$weight', '$age', '$gender', '$goal', '$target_weight', '$calorieIntake')";
+$query = "
+    INSERT INTO calorie_results (height, weight, age, gender, goal, target_weight, calories)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
+";
 
-if ($conn->query($sql) === TRUE) {
-    // Successfully inserted data into the database
-} else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
+$stmt = $mysqli->prepare($query);
+
+$target_weight_param = $target_weight ?? null;
+
+$stmt = $mysqli->prepare($query);
+
+if (!$stmt) {
+    http_response_code(500);
+    echo json_encode(["error" => "Failed to prepare SQL statement."]);
+    exit;
 }
 
-// Output the result back to the frontend
-echo json_encode(array("calories" => round($calorieIntake)));
-
-// Close the database connection
-$conn->close();
-?>
+$stmt->bind_param("ddisssd", $height, $weight, $age, $gender, $goal, $target_weight_param, $calorieIntake);
 
 
 
+if ($stmt->execute()) {
+    echo json_encode(["calories" => round($calorieIntake)]);
+} else {
+    http_response_code(500);
+    echo json_encode(["error" => "Database insert failed."]);
+}
+
+$stmt->close();
+$mysqli->close();
