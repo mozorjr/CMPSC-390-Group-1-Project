@@ -16,50 +16,6 @@
   </style>
 </head>
 <body>
-<<<<<<< HEAD
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-          <a class="btn btn-dark" href="index.html">Home</a>
-          <div class="collapse navbar-collapse">
-            <ul class="navbar-nav mx-auto">
-              <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-              <li class="nav-item"><a class="nav-link" href="member.html">Memberships</a></li>
-              <li class="nav-item"><a class="nav-link" href="RT.html">Request a Trainer</a></li>
-              <li class="nav-item"><a class="nav-link" href="whyUs.html">Why Us</a></li>
-              <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
-              <li class="nav-item d-none" id="sleep-tracker-nav">
-                <a class="nav-link" href="sleepLog.html">Sleep Tracker</a>
-            </li>
-            <li class="nav-item d-none" id="workout-tracker-nav">
-              <a class="nav-link" href="workoutLog.html">Workout Tracker</a>
-          </li>
-            </ul>
-            <a class="btn btn-dark" href="signup.html" id="signup-btn">Signup</a>
-            <a href="profile.html" id="profile-btn" class="d-none">
-                <svg  xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#1f1f1f"><path d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Z"/></svg>
-            </a>
-          </div>
-        </div>
-      </nav>
-      
-  <div class="container mt-5">
-    <h1 class="mb-4">Workout Log</h1>
-
-    <div id="calendar"></div>
-
-    <form id="workout-form" class="mb-4" action="WLdb.php" method="post">
-      <div class="mb-3">
-        <label for="exercise" class="form-label">Exercise Type</label>
-        <input type="text" class="form-control" id="exercise" placeholder="E.g., Running, Cycling" name="exercise" required />
-      </div>
-      <div class="mb-3">
-        <label for="duration" class="form-label">Duration (minutes)</label>
-        <input type="number" class="form-control" id="duration" placeholder="E.g., 30" name="duration" required />
-      </div>
-      <div class="mb-3">
-        <label for="calBurned" class="form-label">Calories Burned</label>
-        <input type="number" class="form-control" id="calBurned" placeholder="E.g., 250" name="calBurned" required />
-=======
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
       <a class="btn btn-dark" href="index.html">Home</a>
@@ -103,7 +59,6 @@
       <div class="mb-3">
         <label for="workout-date" class="form-label">Workout Date</label>
         <input type="date" class="form-control" id="workout-date" name="workout_date" placeholder= "2025-04-10" required />
->>>>>>> main
       </div>
       <button type="submit" class="btn btn-success">Add Workout</button>
     </form>
@@ -157,111 +112,6 @@
     loadSleepLogs(); 
     };
 
-<<<<<<< HEAD
-    //added
-    document.getElementById("workout-form").addEventListener("submit", function (e) {
-    e.preventDefault(); 
-
-    let formData = new FormData(this);
-
-    fetch("WLdb.php", {
-        method: "POST",
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            this.reset();
-            location.reset();
-        } else {
-            alert("Error: " + data.error);
-        }
-    })
-    .catch(error => console.error("Error:", error));
-});//added
-
-    document.addEventListener('DOMContentLoaded', function() {
-      const calendarEl = document.getElementById('calendar');
-      const calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
-        selectable: true,
-        selectHelper: true,
-        events: [],
-        select: function(info) {
-          // When a date is selected on the calendar
-          const selectedDate = info.startStr;
-          //alert('Selected date: ' + selectedDate);
-        },
-        eventClick: function(info) {
-          // When a workout event is clicked
-          alert('Workout on: ' + info.event.start.toISOString() + '\n' + info.event.title);
-        }
-      });
-      calendar.render();
-  
-      // Workout form submission
-      const form = document.getElementById('workout-form');
-      const totalDurationDisplay = document.getElementById('total-duration');
-      const totalCaloriesDisplay = document.getElementById('total-calories');
-      let totalDuration = 0;
-      let totalCalories = 0;
-      let selectedDate = null;
-  
-      form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const exercise = document.getElementById('exercise').value;
-        const duration = parseInt(document.getElementById('duration').value);
-        const caloriesBurned = parseInt(document.getElementById('calories-burned').value);
-  
-        if (exercise && !isNaN(duration) && !isNaN(caloriesBurned) && selectedDate) {
-          // Add workout as an event on the calendar
-          calendar.addEvent({
-            title: `${exercise} - ${duration} min - ${caloriesBurned} kcal`,
-            start: selectedDate,
-            allDay: true
-          });
-  
-          totalDuration += duration;
-          totalCalories += caloriesBurned;
-          totalDurationDisplay.textContent = totalDuration;
-          totalCaloriesDisplay.textContent = totalCalories;
-  
-          const animationDuration = 1.5 * 1000;
-          const animationEnd = Date.now() + animationDuration;
-          const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
-  
-          function randomInRange(min, max) {
-            return Math.random() * (max - min) + min;
-          }
-  
-          const interval = setInterval(function() {
-            const timeLeft = animationEnd - Date.now();
-  
-            if (timeLeft <= 0) {
-              return clearInterval(interval);
-            }
-  
-            const particleCount = 50 * (timeLeft / animationDuration);
-  
-            confetti(
-              Object.assign({}, defaults, {
-                particleCount,
-                origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
-              })
-            );
-            confetti(
-              Object.assign({}, defaults, {
-                particleCount,
-                origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
-              })
-            );
-          }, 250);
-  
-          form.reset();
-          selectedDate = null;
-        } else {
-          //alert('Please select a date on the calendar.');
-=======
     $(document).ready(function () {
   // Function to load workouts from the database
   function loadWorkouts() {
@@ -283,7 +133,6 @@
           workoutDate = workoutDate.toLocaleDateString('en-US'); // 'en-US' gives MM/DD/YYYY format
         } else {
           workoutDate = 'No date available'; // Default message if no valid date
->>>>>>> main
         }
 
 
