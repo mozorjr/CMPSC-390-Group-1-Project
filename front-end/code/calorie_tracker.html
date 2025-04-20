@@ -83,9 +83,16 @@
                     <li class="nav-item"><a class="nav-link" href="member.html">Memberships</a></li>
                     <li class="nav-item"><a class="nav-link" href="calorie_tracker.html">Calorie Tracker</a></li>
                     <li class="nav-item"><a class="nav-link" href="RT.html">Request a Trainer</a></li>
+                    <li class="nav-item"><a class="nav-link" href="trainers.php">Trainers</a></li>
                     <li class="nav-item"><a class="nav-link" href="gymmap.html">Gyms</a></li>
                     <li class="nav-item"><a class="nav-link" href="whyUs.html">Why Us</a></li>
                     <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
+                    <li class="nav-item d-none" id="sleep-tracker-nav">
+                        <a class="nav-link" href="sleepLog.html">Sleep Tracker</a>
+                    </li>
+                    <li class="nav-item d-none" id="workout-tracker-nav">
+                        <a class="nav-link" href="workoutLog.html">Workout Tracker</a>
+                    </li>
                 </ul>
                 <a class="btn btn-dark" href="signup.html" id="signup-btn">Signup</a>
                 <a href="profile.html" id="profile-btn" class="d-none">
@@ -156,10 +163,41 @@
                 <a href="whyUs.html" class="btn">Why Us</a>
                 <a href="contact.html" class="btn">Contact Us</a>
             </nav>
+            <div class="d-flex gap-3">
+                <a href="https://www.facebook.com/?stype=lo&flo=1&deoia=1&jlou=AfdjgGZOS83Ieqm0hmBi6nRSnGTFnPIg0QwQUkfn8PAQkKCD96hoN3jYiNbd3hWJl-w_fxz34f3OjXcnvltHSD4jO78MOHRtFU_ZZ9YpS4dHfA&smuh=24868&lh=Ac8iXpovKhmWYm_-UDk" target="_blank">
+                    <img src="Facebook_logo_(square).png" class="img-fluid" style="max-width: 30px;" alt="Facebook">
+            </a>
+            <a href="https://www.linkedin.com/in/health-horizon-825a80351" target="_blank">
+            <img src="linkedin.png" class="img-fluid" style="max-width: 30px;" alt="LinkedIn">
+                    </a>
+                    <a href="https://www.instagram.com/hea.lthhorizon/" target="_blank">
+                <img src="Insta-Logo.png" class="img-fluid" style="max-width: 30px;" alt="Instagram">
+                    </a>
+            </div>
         </div>
     </footer>
 
     <script>
+window.onload = function() {
+            let loggedIn = localStorage.getItem("loggedIn") === "true";
+            let signupBtn = document.getElementById("signup-btn");
+            let profileBtn = document.getElementById("profile-btn");
+            let sleepTrackerLink = document.getElementById("sleep-tracker-nav");
+            let workoutTrackerLink = document.getElementById("workout-tracker-nav");
+        
+            if (loggedIn) {
+                signupBtn.classList.add("d-none"); // Hide Signup button
+                profileBtn.classList.remove("d-none"); // Show Profile icon
+                sleepTrackerLink.classList.remove("d-none"); // Show Sleep Tracker
+                workoutTrackerLink.classList.remove("d-none");// Show Workout Tracker
+            } else {
+            signupBtn.classList.remove("d-none"); // Show Signup button
+            profileBtn.classList.add("d-none"); // Hide Profile icon
+            sleepTrackerLink.classList.add("d-none"); // Hide Sleep Tracker
+            workoutTrackerLink.classList.add("d-none"); // Hide Workout Tracker
+            }
+        };
+
         document.querySelector('form').addEventListener('submit', function (event) {
             event.preventDefault();  // Prevent the default form submission
     
@@ -185,6 +223,7 @@
     method: 'POST',
     body: formData
 })
+
 .then(async response => {
     const text = await response.text();
     console.log("Raw response:", text);  // Inspect what PHP returned
@@ -201,6 +240,7 @@
         alert("Invalid response from server.");
     }
 })
+
 .catch(error => {
     console.error('Fetch error:', error);
     alert('There was an error calculating your calories.');
