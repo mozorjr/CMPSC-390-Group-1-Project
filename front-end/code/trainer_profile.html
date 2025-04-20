@@ -1,0 +1,29 @@
+<!-- trainer_profile.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trainer Profile</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>Trainer Profile</h1>
+  <div class="trainer-profile">
+    <img src="{{ trainer.profile_pic_url }}" alt="Profile Picture" width="150">
+    <h2>{{ trainer.name }}</h2>
+    <p><strong>Specialty:</strong> {{ trainer.specialty }}</p>
+    <p><strong>Certifications:</strong> {{ trainer.certifications }}</p>
+    <p><strong>Experience:</strong> {{ trainer.experience }} years</p>
+    <p><strong>Bio:</strong> {{ trainer.bio }}</p>
+  </div>
+
+  <div class="actions">
+    <a href="/edit/{{ trainer.id }}">Edit Profile</a>
+    <form action="/delete/{{ trainer.id }}" method="POST" style="display:inline;">
+      <button type="submit">Delete Profile</button>
+    </form>
+  </div>
+</body>
+</html>
+

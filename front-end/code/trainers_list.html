@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trainer Profiles</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>All Trainer Profiles</h1>
+  <div class="trainers-list">
+    {% for trainer in trainers %}
+      <div class="trainer-card">
+        <img src="{{ trainer.profile_pic_url }}" alt="{{ trainer.name }}" width="100">
+        <h3>{{ trainer.name }}</h3>
+        <p><strong>Specialty:</strong> {{ trainer.specialty }}</p>
+        <a href="/trainer/{{ trainer.id }}">View Profile</a>
+      </div>
+    {% endfor %}
+  </div>
+</body>
+</html>

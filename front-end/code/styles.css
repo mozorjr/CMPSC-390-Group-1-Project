@@ -119,5 +119,71 @@ div:hs(input:focus) > label{
     .wrapper{
         width: min(600px, 100%);
         border-radius: 0;
-    }
+        }
+}
+.calorie-tracker-box {
+    max-width: 600px;  /* Set the maximum width of the box */
+    margin: 0 auto;  /* Center the box */
+    background-color: #f8f9fa;  /* Light background color */
+    border: 1px solid #ddd;  /* Light gray border */
+    border-radius: 8px;  /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Subtle shadow effect */
+    padding: 20px;
+}
+
+h1 {
+    font-size: 2rem;  /* Larger font for the title */
+    color: #333;  /* Dark color for the title */
+    margin-bottom: 20px;  /* Space below the title */
+}
+
+form .form-label {
+    font-size: 1rem;  /* Font size for labels */
+}
+
+form .form-control {
+    font-size: 1rem;  /* Font size for input fields */
+}
+
+.btn-submit {
+    width: 100%;  /* Full width button */
+    background-color: #007bff;  /* Blue button */
+    color: white;  /* White text on the button */
+    font-size: 1.1rem;  /* Slightly larger font */
+    border: none;  /* Remove default border */
+    padding: 10px;  /* Padding inside the button */
+    border-radius: 5px;  /* Rounded corners for the button */
+    cursor: pointer;  /* Pointer cursor on hover */
+}
+
+#calories-result {
+    text-align: center;
+    font-size: 1.25rem;
+    color: #007bff;
+    margin-top: 20px;
+}
+
+#mapContainer {
+    margin-top: 80px;
+    align-self: center;
+  }
+
+#map {
+    margin-left: 40px;
+    margin-right: 40px;
+    height: 300px; 
+    width: 40%; 
+    float: left;
+}
+
+#mapText {
+    font-size: 20px;
+    margin-right: 40px;
+    align-self: right;
+    margin-bottom: 40px;
+}
+h8 {
+    align-self: right;
+    font-size:  30px;
+    margin-left: 10%;
 }

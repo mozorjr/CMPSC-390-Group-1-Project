@@ -15,11 +15,20 @@
           <a class="btn btn-dark" href="index.html">Home</a>
           <div class="collapse navbar-collapse">
             <ul class="navbar-nav mx-auto">
-              <li classsss="nav-item"><a class="nav-link" href="about.html">About</a></li>
+              <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
               <li class="nav-item"><a class="nav-link" href="member.html">Memberships</a></li>
+              <li class="nav-item"><a class="nav-link" href="calorie_tracker.html">Calorie Tracker</a></li>
               <li class="nav-item"><a class="nav-link" href="RT.html">Request a Trainer</a></li>
+              <li class="nav-item"><a class="nav-link" href="trainers.php">Trainers</a></li>
+              <li class="nav-item"><a class="nav-link" href="gymmap.html">Gyms</a></li>
               <li class="nav-item"><a class="nav-link" href="whyUs.html">Why Us</a></li>
               <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
+              <li class="nav-item d-none" id="sleep-tracker-nav">
+                <a class="nav-link" href="sleepLo.html">Sleep Tracker</a>
+            </li>
+            <li class="nav-item d-none" id="workout-tracker-nav">
+                <a class="nav-link" href="workoutLog.html">Workout Tracker</a>
+            </li>
             </ul>
             <a class="btn btn-dark" href="signup.html" id="signup-btn">Signup</a>
             <a href="profile.html" id="profile-btn" class="d-none">
@@ -44,7 +53,7 @@
         </div>
 
             <div class="logoA d-flex justify-content-center">
-                <img src="{{url_for('static',filename='images/Designer.jpeg')}}" class="img-fluid" style="max-width: 30%; min-width: 150px;" alt="Company Logo">
+                <img src="Designer.jpeg" class="img-fluid" style="max-width: 30%; min-width: 150px;" alt="Company Logo">
             </div>
 
         <section class="block text-center bg-light py-5 mt-5 w-100">
@@ -85,7 +94,7 @@
             <p class="fs-5 text-center p-3">Your fitness journey starts here—let’s achieve your goals together!</p>
         </div>
         <div class="img text-center">
-            <img src="{{url_for('static',filename='images/trainer.jpg')}}" class="img-fluid" style="max-width: 30%; min-width: 150px;" alt="Trainer Img">
+            <img src="trainer.jpg" class="img-fluid" style="max-width: 30%; min-width: 150px;" alt="Trainer Img">
         </div>
 
         <footer class="foot bg-light py-4 mt-5">
@@ -97,13 +106,13 @@
                 </nav>
                 <div class="d-flex gap-3">
                     <a href="https://www.facebook.com/?stype=lo&flo=1&deoia=1&jlou=AfdjgGZOS83Ieqm0hmBi6nRSnGTFnPIg0QwQUkfn8PAQkKCD96hoN3jYiNbd3hWJl-w_fxz34f3OjXcnvltHSD4jO78MOHRtFU_ZZ9YpS4dHfA&smuh=24868&lh=Ac8iXpovKhmWYm_-UDk" target="_blank">
-                        <img src="{{url_for('static',filename='images/Facebook_logo_(square).png')}}" class="img-fluid" style="max-width: 30px;" alt="Facebook">
+                        <img src="Facebook_logo_(square).png" class="img-fluid" style="max-width: 30px;" alt="Facebook">
                 </a>
                 <a href="https://www.linkedin.com/in/health-horizon-825a80351" target="_blank">
-                <img src="{{url_for('static',filename='images/linkedin.png')}}" class="img-fluid" style="max-width: 30px;" alt="LinkedIn">
+                <img src="linkedin.png" class="img-fluid" style="max-width: 30px;" alt="LinkedIn">
                         </a>
                         <a href="https://www.instagram.com/hea.lthhorizon/" target="_blank">
-                    <img src="{{url_for('static',filename='images/Insta-Logo.png')}}" class="img-fluid" style="max-width: 30px;" alt="Instagram">
+                    <img src="Insta-Logo.png" class="img-fluid" style="max-width: 30px;" alt="Instagram">
                         </a>
                 </div>
             </div>
@@ -113,10 +122,19 @@
             let loggedIn = localStorage.getItem("loggedIn") === "true";
             let signupBtn = document.getElementById("signup-btn");
             let profileBtn = document.getElementById("profile-btn");
+            let sleepTrackerLink = document.getElementById("sleep-tracker-nav")
+            let workoutTrackerLink = document.getElementById("workout-tracker-nav")
         
             if (loggedIn) {
                 signupBtn.classList.add("d-none"); // Hide Signup button
                 profileBtn.classList.remove("d-none"); // Show Profile icon
+                sleepTrackerLink.classList.remove("d-none"); // Show Sleep Tracker
+                workoutTrackerLink.classList.remove("d-none");// Show Workout Tracker
+            } else {
+            signupBtn.classList.remove("d-none");
+            profileBtn.classList.add("d-none");
+            sleepTrackerLink.classList.add("d-none"); // Hide Sleep Tracker
+            workoutTrackerLink.classList.add("d-none"); // Hide Workout Tracker
             }
         };
         </script>
