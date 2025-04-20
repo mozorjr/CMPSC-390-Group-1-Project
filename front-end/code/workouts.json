@@ -1,0 +1,14 @@
+[
+    {
+        "exercise":"running",
+        "duration":"20",
+        "calories_burned":"20",
+        "workout_date":"2024-03-12"
+    },
+    {
+        "exercise":"cycling",
+        "duration":"30",
+        "calories_burned":"15",
+        "workout_date":"2025-04-10"
+    }
+]
