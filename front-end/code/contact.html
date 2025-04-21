@@ -21,9 +21,16 @@
                     <li class="nav-item"><a class="nav-link" href="member.html">Memberships</a></li>
                     <li class="nav-item"><a class="nav-link" href="calorie_tracker.html">Calorie Tracker</a></li>
                     <li class="nav-item"><a class="nav-link" href="RT.html">Request a Trainer</a></li>
+                    <li class="nav-item"><a class="nav-link" href="trainers.php">Trainers</a></li>
                     <li class="nav-item"><a class="nav-link" href="gymmap.html">Gyms</a></li>
                     <li class="nav-item"><a class="nav-link" href="whyUs.html">Why Us</a></li>
                     <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
+                    <li class="nav-item d-none" id="sleep-tracker-nav">
+                        <a class="nav-link" href="sleepLog.html">Sleep Tracker</a>
+                    </li>
+                    <li class="nav-item d-none" id="workout-tracker-nav">
+                        <a class="nav-link" href="workoutLog.html">Workout Tracker</a>
+                    </li>
                 </ul>
                 <a class="btn btn-dark" href="signup.html" id="signup-btn">Signup</a>
             <a href="profile.html" id="profile-btn" class="d-none">
@@ -99,11 +106,20 @@
     let loggedIn = localStorage.getItem("loggedIn") === "true";
     let signupBtn = document.getElementById("signup-btn");
     let profileBtn = document.getElementById("profile-btn");
-  
+    let sleepTrackerLink = document.getElementById("sleep-tracker-nav");
+            let workoutTrackerLink = document.getElementById("workout-tracker-nav");
+
     if (loggedIn) {
-          signupBtn.classList.add("d-none"); // Hide Signup button
-          profileBtn.classList.remove("d-none"); // Show Profile icon
-    }
+        signupBtn.classList.add("d-none"); // Hide Signup button
+        profileBtn.classList.remove("d-none"); // Show Profile icon
+        sleepTrackerLink.classList.remove("d-none"); // Show Sleep Tracker
+        workoutTrackerLink.classList.remove("d-none");// Show Workout Tracker
+        } else {
+        signupBtn.classList.remove("d-none"); // Show Signup button
+        profileBtn.classList.add("d-none"); // Hide Profile icon
+        sleepTrackerLink.classList.add("d-none"); // Hide Sleep Tracker
+        workoutTrackerLink.classList.add("d-none"); // Hide Workout Tracker
+        }
 };
 </script>
 </body>

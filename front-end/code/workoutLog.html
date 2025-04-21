@@ -25,6 +25,7 @@
           <li class="nav-item"><a class="nav-link" href="member.html">Memberships</a></li>
           <li class="nav-item"><a class="nav-link" href="calorie_tracker.html">Calorie Tracker</a></li>
           <li class="nav-item"><a class="nav-link" href="RT.html">Request a Trainer</a></li>
+          <li class="nav-item"><a class="nav-link" href="trainers.php">Trainers</a></li>
           <li class="nav-item"><a class="nav-link" href="whyUs.html">Why Us</a></li>
           <li class="nav-item"><a class="nav-link" href="gymmap.html">Gyms</a></li>
           <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
@@ -103,12 +104,24 @@
 
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
   <script>
-     window.onload = function () {
+    window.onload = function () {
     let loggedIn = localStorage.getItem("loggedIn") === "true";
-    document.getElementById("signup-btn").classList.toggle("d-none", loggedIn);
-    document.getElementById("profile-btn").classList.toggle("d-none", !loggedIn);
-    document.getElementById("sleep-tracker-nav").classList.toggle("d-none", !loggedIn);
-    document.getElementById("workout-tracker-nav").classList.toggle("d-none", !loggedIn);
+    let signupBtn = document.getElementById("signup-btn");
+    let profileBtn = document.getElementById("profile-btn");
+    let sleepTrackerLink = document.getElementById("sleep-tracker-nav");
+    let workoutTrackerLink = document.getElementById("workout-tracker-nav");
+
+    if (loggedIn) {
+      signupBtn.classList.add("d-none"); // Hide Signup button
+      profileBtn.classList.remove("d-none"); // Show Profile icon
+      sleepTrackerLink.classList.remove("d-none"); // Show Sleep Tracker
+      workoutTrackerLink.classList.remove("d-none");// Show Workout Tracker
+      } else {
+        signupBtn.classList.remove("d-none"); // Show Signup button
+        profileBtn.classList.add("d-none"); // Hide Profile icon
+        sleepTrackerLink.classList.add("d-none"); // Hide Sleep Tracker
+        workoutTrackerLink.classList.add("d-none"); // Hide Workout Tracker
+      }
     };
 
     $(document).ready(function () {
