@@ -104,21 +104,25 @@
     let formData = new FormData(this);
 
     fetch("sleepDb.php", {
-        method: "POST",
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            //reset if successful
-            this.reset();
-            //refresh to show the logs at the bottom of the page
-            loadSleepLogs();
-        } else {
-            alert("Error: " + data.error);
-        }
-    })
-    .catch(error => console.error("Error:", error));
+    method: "POST",
+    body: formData
+})
+.then(response => response.text()) // ← get raw response
+.then(text => {
+    console.log("Raw server response:", text); // ← see what PHP actually returns
+    let data = JSON.parse(text); // now try to parse it
+    console.log("Parsed JSON:", data);
+
+    if (data.success) {
+        document.getElementById("sleep-form").reset();
+        loadSleepLogs();
+    } else {
+        alert("Error: " + data.error);
+    }
+})
+.catch(error => console.error("Parsing error:", error));
+
+
 });
 
 //get the sleep logs from the DB by calling the fetchSleepLogs.php
