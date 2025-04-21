@@ -108,10 +108,10 @@
     method: "POST",
     body: formData
 })
-.then(response => response.text()) // ← get raw response
+.then(response => response.text())
 .then(text => {
-    console.log("Raw server response:", text); // ← see what PHP actually returns
-    let data = JSON.parse(text); // now try to parse it
+    console.log("Raw server response:", text);
+    let data = JSON.parse(text);
     console.log("Parsed JSON:", data);
 
     if (data.success) {
