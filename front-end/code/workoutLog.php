@@ -1,3 +1,8 @@
+<?php
+session_start();
+$isLoggedIn = isset($_SESSION['user_id']);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,35 +21,40 @@
   </style>
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <a class="btn btn-dark" href="index.html">Home</a>
-      <div class="collapse navbar-collapse">
-        <ul class="navbar-nav mx-auto">
-          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-          <li class="nav-item"><a class="nav-link" href="member.html">Memberships</a></li>
-          <li class="nav-item"><a class="nav-link" href="calorie_tracker.html">Calorie Tracker</a></li>
-          <li class="nav-item"><a class="nav-link" href="RT.html">Request a Trainer</a></li>
-          <li class="nav-item"><a class="nav-link" href="trainers.php">Trainers</a></li>
-          <li class="nav-item"><a class="nav-link" href="gymmap.html">Gyms</a></li>
-          <li class="nav-item"><a class="nav-link" href="whyUs.html">Why Us</a></li>
-          <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
-          <li class="nav-item d-none" id="sleep-tracker-nav"><a class="nav-link" href="sleepLog.html">Sleep Tracker</a></li>
-          <li class="nav-item d-none" id="workout-tracker-nav"><a class="nav-link" href="workoutLog.html">Workout Tracker</a></li>
-        </ul>
-        <a class="btn btn-dark" href="signup.html" id="signup-btn">Signup</a>
-        <a href="profile.html" id="profile-btn" class="d-none">
-          <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#1f1f1f"><path d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Z"/></svg>
-        </a>
-      </div>
+        <a class="btn btn-dark" href="index.html">Home</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mx-auto">
+            <li class="nav-item"><a class="nav-link" href="about.php">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="member.php">Memberships</a></li>
+                <li class="nav-item"><a class="nav-link" href="calorie_tracker.php">Calorie Tracker</a></li>
+                <li class="nav-item"><a class="nav-link" href="dashboard.php">User Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link" href="sleepLog.php">Sleep Log</a></li>
+                <li class="nav-item"><a class="nav-link" href="workoutLog.php">Workout Log</a></li>
+                <li class="nav-item"><a class="nav-link" href="RT.php">Request a Trainer</a></li>
+                <li class="nav-item"><a class="nav-link" href="trainers.php">Apply For Trainer</a></li>
+                <li class="nav-item"><a class="nav-link" href="gymmap.php">Gyms</a></li>
+                <li class="nav-item"><a class="nav-link" href="whyUs.php">Why Us</a></li>
+                <li class="nav-item"><a class="nav-link" href="contact.php">Contact Us</a></li>
+            </ul>
+            <?php if ($isLoggedIn): ?>
+                <a class="btn btn-outline-danger ms-2" href="logout.php">Logout</a>
+            <?php else: ?>
+                <a class="btn btn-dark" href="signup.php">Signup/Login</a>
+            <?php endif; ?>
+        </div>
     </div>
-  </nav>
+</nav>
   
   <div class="container mt-5">
     <h1 class="mb-4">Workout Log</h1>
 
     <!-- Workout Form -->
-    <form id="workout-form" class="mb-4">
+    <form id="workout-form" class="mb-4" method="post" action="javascript:void(0);">
       <div class="mb-3">
         <label for="exercise" class="form-label">Exercise Type</label>
         <input type="text" class="form-control" id="exercise" name="exercise" placeholder="E.g., Running, Cycling" required />
@@ -85,8 +95,8 @@
     <div class="container-fluid d-flex justify-content-between align-items-center">
       <a class="btn btn-dark" href="index.html">Home</a>
       <nav class="d-flex gap-3">
-          <a href="whyUs.html" class="btn">Why Us</a>
-          <a href="contact.html" class="btn">Contact Us</a>
+          <a href="whyUs.php" class="btn">Why Us</a>
+          <a href="contact.php" class="btn">Contact Us</a>
       </nav>
       <div class="d-flex gap-3">
           <a href="https://www.facebook.com" target="_blank">
@@ -104,24 +114,12 @@
 
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
   <script>
-    window.onload = function () {
+     window.onload = function () {
     let loggedIn = localStorage.getItem("loggedIn") === "true";
-    let signupBtn = document.getElementById("signup-btn");
-    let profileBtn = document.getElementById("profile-btn");
-    let sleepTrackerLink = document.getElementById("sleep-tracker-nav");
-    let workoutTrackerLink = document.getElementById("workout-tracker-nav");
-
-    if (loggedIn) {
-      signupBtn.classList.add("d-none"); // Hide Signup button
-      profileBtn.classList.remove("d-none"); // Show Profile icon
-      sleepTrackerLink.classList.remove("d-none"); // Show Sleep Tracker
-      workoutTrackerLink.classList.remove("d-none");// Show Workout Tracker
-      } else {
-        signupBtn.classList.remove("d-none"); // Show Signup button
-        profileBtn.classList.add("d-none"); // Hide Profile icon
-        sleepTrackerLink.classList.add("d-none"); // Hide Sleep Tracker
-        workoutTrackerLink.classList.add("d-none"); // Hide Workout Tracker
-      }
+    document.getElementById("signup-btn").classList.toggle("d-none", loggedIn);
+    document.getElementById("profile-btn").classList.toggle("d-none", !loggedIn);
+    document.getElementById("sleep-tracker-nav").classList.toggle("d-none", !loggedIn);
+    document.getElementById("workout-tracker-nav").classList.toggle("d-none", !loggedIn);
     };
 
     $(document).ready(function () {
@@ -135,10 +133,9 @@
       workouts.forEach(function(workout) {
         // Log the raw workout_date to the console
         console.log("Raw workout_date:", workout.workout_date);
-        
+
         // Check if workout_date exists and is a valid date
         let workoutDate = workout.workout_date ? new Date(workout.workout_date) : null;
-
 
         // Format the date to a readable format (MM/DD/YYYY)
         if (workoutDate && !isNaN(workoutDate)) {
@@ -147,20 +144,18 @@
           workoutDate = 'No date available'; // Default message if no valid date
         }
 
-
         // Log the formatted workout_date
         console.log("Formatted workout_date:", workoutDate);
 
-       // Append each workout entry to the table
-tableBody.append(
-  `<tr>
-    <td>${workout.exercise}</td>
-    <td>${workout.duration}</td>
-    <td>${workout.calories_burned}</td>
-    <td>${workoutDate}</td> <!-- Display formatted workout date here -->
-  </tr>`
-);
-
+        // Append each workout entry to the table
+        tableBody.append(
+          `<tr>
+            <td>${workout.exercise}</td>
+            <td>${workout.duration}</td>
+            <td>${workout.calories_burned}</td>
+            <td>${workoutDate}</td> <!-- Display formatted workout date here -->
+          </tr>`
+        );
       });
     });
   }
@@ -180,29 +175,59 @@ tableBody.append(
 
     // Prepare new workout data
     let newWorkout = {
-  exercise: $('#exercise').val(),
-  duration: parseInt($('#duration').val()),
-  calories_burned: parseInt($('#calories-burned').val()),
-  workout_date: $('#workout-date').val()
-};
+      exercise: exercise,
+      duration: parseInt(duration),
+      calories_burned: parseInt(caloriesBurned),
+      workout_date: workoutDate
+    };
 
-console.log("Sending workout data:", newWorkout); // 👈 Add this
+    console.log("Sending workout data:", newWorkout); // 👈 Add this for debugging
 
-$.ajax({
-  url: 'add_workout.php',
-  type: 'POST',
-  data: newWorkout,
-  success: function(response) {
-    console.log("Response from PHP:", response); // 👈 Add this
-    loadWorkouts();
-    $('#workout-form')[0].reset();
-  }
-});
+    $.ajax({
+      url: 'add_workout.php',
+      type: 'POST',
+      data: newWorkout,
+      success: function(response) {
+        console.log("Raw server response:", response); // Log the raw response for debugging
+        try {
+          let data = JSON.parse(response); // Try to parse the response
+          if (data.success) {
+            $('#workout-form')[0].reset();
+            loadWorkouts(); // Reload workouts after successful submission
+          } else {
+            alert("Error: " + data.error); // Show the error if available
+          }
+        } catch (e) {
+          // Handle unexpected responses that aren't JSON
+          loadWorkouts();
+        }
+      },
+      error: function(xhr) {
+        if (xhr.status === 401) {
+          alert("You must be logged in to log your workout.");
+          window.location.href = "signup.php"; // Optional: redirect to login
+        } else {
+          let message = "Something went wrong.";
+          if (xhr.responseText) {
+            try {
+              let data = JSON.parse(xhr.responseText);
+              message = data.error || message;
+            } catch (e) {
+              // If the response isn't valid JSON, just use the raw response
+              message = xhr.responseText;
+            }
+          }
+          alert("Error: " + message); // Show the error message
+        }
+      }
+    });
   });
 });
+
+
+
+
 
   </script>
 </body>
 </html>
-
-

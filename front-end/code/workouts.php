@@ -1,5 +1,8 @@
 <?php
 // Use database connection
+
+
+
 $conn = require_once 'database.php';
 
 // Fetch all workouts from the database

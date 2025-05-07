@@ -1,9 +1,5 @@
 <?php
-$host = "localhost";
-$dbname = "healthHorizon";
-$username = "root";
-$password = "";
-
+$conn = require __DIR__ . "/database.php";
 
 
 if (isset($_GET['id'])) {

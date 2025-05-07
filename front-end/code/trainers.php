@@ -1,8 +1,5 @@
 <?php
-$host = "localhost";
-$dbname = "healthHorizon";
-$username = "root";
-$password = "";
+$conn = require __DIR__ . "/database.php";
 
 $sql = "SELECT * FROM trainers";
 $result = $conn->query($sql);
@@ -12,6 +9,7 @@ while ($row = $result->fetch_assoc()) {
     $trainers[] = $row;
 }
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -142,7 +140,7 @@ while ($row = $result->fetch_assoc()) {
     <h1>Trainer List</h1>
 
     <div class="top-bar">
-        <a href="index.php" class="btn-home">← Back to Home</a>
+        <a href="about.php" class="btn-home">← Back to Home</a>
         <a href="trainer_input.php" class="btn-add">+ Add New Trainer</a>
     </div>
 
@@ -150,7 +148,7 @@ while ($row = $result->fetch_assoc()) {
         <?php foreach ($trainers as $trainer): ?>
             <div class="trainer-card">
                 <?php if (!empty($trainer['profile_pic'])): ?>
-                    <img src="static/uploads/<?php echo htmlspecialchars($trainer['profile_pic']); ?>" alt="Profile Picture">
+                    <img src="trainer_pics/<?php echo htmlspecialchars($trainer['profile_pic']); ?>" alt="Profile Picture">
                 <?php else: ?>
                     <img src="static/default_profile.png" alt="No Picture">
                 <?php endif; ?>
