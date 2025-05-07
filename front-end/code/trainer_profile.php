@@ -1,8 +1,5 @@
 <?php
-$host = "localhost";
-$dbname = "healthHorizon";
-$username = "root";
-$password = "";
+$conn = require __DIR__ . "/database.php";
 
 if (isset($_GET['trainer_id'])) {
     $trainer_id = $_GET['trainer_id'];
@@ -102,14 +99,15 @@ if (isset($_GET['trainer_id'])) {
   <h1>Trainer Profile</h1>
 
   <div class="trainer-profile">
-    <?php
-    $imagePath = "static/uploads/" . $trainer['profile_pic'];
-    if (!empty($trainer['profile_pic']) && file_exists($imagePath)) {
-        echo '<img src="' . $imagePath . '" alt="Profile Picture">';
-    } else {
-        echo '<img src="static/default_profile.png" alt="No Profile Picture">';
-    }
-    ?>
+  <?php
+$imagePath = "trainer_pics/" . $trainer['profile_pic'];
+if (!empty($trainer['profile_pic']) && file_exists($imagePath)) {
+    echo '<img src="' . $imagePath . '" alt="Profile Picture">';
+} else {
+    echo '<img src="static/default_profile.png" alt="No Profile Picture">';
+}
+?>
+
 
     <h2><?php echo htmlspecialchars($trainer['name']); ?></h2>
     <p><strong>Specialty:</strong> <?php echo htmlspecialchars($trainer['specialty']); ?></p>

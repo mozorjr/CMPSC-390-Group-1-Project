@@ -5,10 +5,15 @@ error_reporting(E_ALL);
 
 session_start();
 
+$isLoggedIn = isset($_SESSION['user_id']);
+
 if (!isset($_SESSION['user_id'])) {
-    echo "Session not set. Please log in.";
+    header("Location: dashboardFail.php");
     exit;
 }
+
+
+
 
 require_once "database.php";
 
@@ -30,12 +35,14 @@ $user = $result->fetch_assoc();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link rel="stylesheet" href="frame.css">
     <style>
         body {
             font-family: 'Segoe UI', sans-serif;
             background: #f4f4f9;
             margin: 0;
-            padding: 2rem;
+            padding: 0;
         }
         .container {
             max-width: 800px;
@@ -90,15 +97,7 @@ $user = $result->fetch_assoc();
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        .navbar {
-            background-color: #ffffff;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-            padding: 1rem 2rem;
-            margin-bottom: 2rem;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
+        
         .nav-container {
             display: flex;
             justify-content: space-between;
@@ -130,18 +129,35 @@ $user = $result->fetch_assoc();
     </style>
 </head>
 <body>
-<nav class="navbar">
-    <div class="nav-container">
-        <div class="nav-logo">🏋️‍♂️ HealthHorizon</div>
-        <ul class="nav-links">
-            <li><a href="about.html">About</a></li>
-            <li><a href="member.html">Memberships</a></li>
-            <li><a href="RT.html">Request a Trainer</a></li>
-            <li><a href="whyUs.html">Why Us</a></li>
-            <li><a href="contact.html">Contact Us</a></li>
-        </ul>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="btn btn-dark" href="index.html">Home</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mx-auto">
+            <li class="nav-item"><a class="nav-link" href="about.php">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="member.php">Memberships</a></li>
+                <li class="nav-item"><a class="nav-link" href="calorie_tracker.php">Calorie Tracker</a></li>
+                <li class="nav-item"><a class="nav-link" href="dashboard.php">User Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link" href="sleepLog.php">Sleep Log</a></li>
+                <li class="nav-item"><a class="nav-link" href="workoutLog.php">Workout Log</a></li>
+                <li class="nav-item"><a class="nav-link" href="RT.php">Request a Trainer</a></li>
+                <li class="nav-item"><a class="nav-link" href="trainers.php">Apply For Trainer</a></li>
+                <li class="nav-item"><a class="nav-link" href="gymmap.php">Gyms</a></li>
+                <li class="nav-item"><a class="nav-link" href="whyUs.php">Why Us</a></li>
+                <li class="nav-item"><a class="nav-link" href="contact.php">Contact Us</a></li>
+            </ul>
+            <?php if ($isLoggedIn): ?>
+                <a class="btn btn-outline-danger ms-2" href="logout.php">Logout</a>
+            <?php else: ?>
+                <a class="btn btn-dark" href="signup.php">Signup/Login</a>
+            <?php endif; ?>
+        </div>
     </div>
 </nav>
+
 
 <div class="container">
     <h1>Welcome back, <?php echo htmlspecialchars($user['UserName']); ?> 👋</h1>

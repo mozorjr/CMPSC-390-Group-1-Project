@@ -1,3 +1,8 @@
+<?php
+session_start();
+$isLoggedIn = isset($_SESSION['user_id']);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,26 +14,34 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <a class="btn btn-dark" href="index.html">Home</a>
-      <div class="collapse navbar-collapse">
-        <ul class="navbar-nav mx-auto">
-          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-          <li class="nav-item"><a class="nav-link" href="member.html">Memberships</a></li>
-          <li class="nav-item"><a class="nav-link" href="calorie_tracker.html">Calorie Tracker</a></li>
-          <li class="nav-item"><a class="nav-link" href="RT.html">Request a Trainer</a></li>
-          <li class="nav-item"><a class="nav-link" href="gymmap.html">Gyms</a></li>
-          <li class="nav-item"><a class="nav-link" href="whyUs.html">Why Us</a></li>
-          <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
-        </ul>
-        <a class="btn btn-dark" href="signup.html" id="signup-btn">Signup</a>
-            <a href="profile.html" id="profile-btn" class="d-none">
-                <svg  xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#1f1f1f"><path d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Z"/></svg>
-              </a>
-      </div>
+        <a class="btn btn-dark" href="index.html">Home</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mx-auto">
+            <li class="nav-item"><a class="nav-link" href="about.php">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="member.php">Memberships</a></li>
+                <li class="nav-item"><a class="nav-link" href="calorie_tracker.php">Calorie Tracker</a></li>
+                <li class="nav-item"><a class="nav-link" href="dashboard.php">User Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link" href="sleepLog.php">Sleep Log</a></li>
+                <li class="nav-item"><a class="nav-link" href="workoutLog.php">Workout Log</a></li>
+                <li class="nav-item"><a class="nav-link" href="RT.php">Request a Trainer</a></li>
+                <li class="nav-item"><a class="nav-link" href="trainers.php">Apply For Trainer</a></li>
+                <li class="nav-item"><a class="nav-link" href="gymmap.php">Gyms</a></li>
+                <li class="nav-item"><a class="nav-link" href="whyUs.php">Why Us</a></li>
+                <li class="nav-item"><a class="nav-link" href="contact.php">Contact Us</a></li>
+            </ul>
+            <?php if ($isLoggedIn): ?>
+                <a class="btn btn-outline-danger ms-2" href="logout.php">Logout</a>
+            <?php else: ?>
+                <a class="btn btn-dark" href="signup.php">Signup/Login</a>
+            <?php endif; ?>
+        </div>
     </div>
-  </nav>
+</nav>
 
     <main>
         <section class="text-center mt-5">
@@ -149,8 +162,8 @@
         <div class="container-fluid d-flex justify-content-between align-items-center">
             <a class="btn btn-dark" href="index.html">Home</a>
             <nav class="d-flex gap-3">
-                <a href="whyUs.html" class="btn">Why Us</a>
-                <a href="contact.html" class="btn">Contact Us</a>
+                <a href="whyUs.php" class="btn">Why Us</a>
+                <a href="contact.php" class="btn">Contact Us</a>
             </nav>
             <div class="d-flex gap-3">
                 <a href="https://www.facebook.com/?stype=lo&flo=1&deoia=1&jlou=AfdjgGZOS83Ieqm0hmBi6nRSnGTFnPIg0QwQUkfn8PAQkKCD96hoN3jYiNbd3hWJl-w_fxz34f3OjXcnvltHSD4jO78MOHRtFU_ZZ9YpS4dHfA&smuh=24868&lh=Ac8iXpovKhmWYm_-UDk" target="_blank">

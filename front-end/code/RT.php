@@ -1,3 +1,27 @@
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+session_start();
+$isLoggedIn = isset($_SESSION['user_id']);
+
+$mysqli = require __DIR__ . "/database.php";
+$conn = $mysqli;
+require "database.php";
+
+$sql = "SELECT * FROM trainers";
+$result = $conn->query($sql);
+$trainers = [];
+
+while ($row = $result->fetch_assoc()) {
+    $trainers[] = $row;
+}
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,62 +46,60 @@
     </style>
     
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-          <a class="btn btn-dark" href="index.html">Home</a>
-          <div class="collapse navbar-collapse">
+    <div class="container-fluid">
+        <a class="btn btn-dark" href="index.html">Home</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mx-auto">
-              <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-              <li class="nav-item"><a class="nav-link" href="member.html">Memberships</a></li>
-              <li class="nav-item"><a class="nav-link" href="calorie_tracker.html">Calorie Tracker</a></li>
-              <li class="nav-item"><a class="nav-link" href="RT.html">Request a Trainer</a></li>
-              <li class="nav-item"><a class="nav-link" href="gymmap.html">Gyms</a></li>
-              <li class="nav-item"><a class="nav-link" href="whyUs.html">Why Us</a></li>
-              <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
+            <li class="nav-item"><a class="nav-link" href="about.php">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="member.php">Memberships</a></li>
+                <li class="nav-item"><a class="nav-link" href="calorie_tracker.php">Calorie Tracker</a></li>
+                <li class="nav-item"><a class="nav-link" href="dashboard.php">User Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link" href="sleepLog.php">Sleep Log</a></li>
+                <li class="nav-item"><a class="nav-link" href="workoutLog.php">Workout Log</a></li>
+                <li class="nav-item"><a class="nav-link" href="RT.php">Request a Trainer</a></li>
+                <li class="nav-item"><a class="nav-link" href="trainers.php">Apply For Trainer</a></li>
+                <li class="nav-item"><a class="nav-link" href="gymmap.php">Gyms</a></li>
+                <li class="nav-item"><a class="nav-link" href="whyUs.php">Why Us</a></li>
+                <li class="nav-item"><a class="nav-link" href="contact.php">Contact Us</a></li>
             </ul>
-            <a class="btn btn-dark" href="signup.html" id="signup-btn">Signup</a>
-                <a href="profile.html" id="profile-btn" class="d-none">
-                    <svg  xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#1f1f1f"><path d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Z"/></svg>
-                  </a>
-          </div>
+            <?php if ($isLoggedIn): ?>
+                <a class="btn btn-outline-danger ms-2" href="logout.php">Logout</a>
+            <?php else: ?>
+                <a class="btn btn-dark" href="signup.php">Signup/Login</a>
+            <?php endif; ?>
         </div>
-      </nav>
+    </div>
+</nav>
 
-     <script>
-        function displayInfo() {
-            var selectedOption = document.getElementById("choices").value;
-            var infoDiv = document.getElementById("info");
-    
-            infoDiv.innerHTML = "";
-    
-            if (selectedOption === "option1") {
-                infoDiv.innerHTML = `
-                    <img src="trainer1.jpg" alt="Trainer 1" class="img-fluid mb-3">
-                    <h4>James Carter</h4>
-                    <p>Expert in Strength Training & Nutrition</p>
-                `;
-            } else if (selectedOption === "option2") {
-                infoDiv.innerHTML = `
-                    <img src="trainer2.jpg" class="img-fluid mb-3">
-                    <h4>Michael Hayes</h4>
-                    <p>Certified Yoga & Pilates Instructor</p>
-                `;
-            } else if (selectedOption === "option3") {
-                infoDiv.innerHTML = `
-                    <img src="trainer3.jpg" alt="Trainer 3" class="img-fluid mb-3">
-                    <h4>Emily Davis</h4>
-                    <p>Expert in Cardio & HIIT Workouts</p>
-                `;
-            } else if (selectedOption === "option4") {
-                infoDiv.innerHTML = `
-                    <img src="trainer4.jpg" alt="Trainer 4" class="img-fluid mb-3">
-                    <h4>Trainer Name 4</h4>
-                    <p>Specialist in Weight Loss & Nutrition</p>
-                `;
-            } else {
-                infoDiv.innerHTML = "<p>Please select an option to see more information.</p>";
-            }
+<script>
+    const trainerData = <?php echo json_encode($trainers); ?>;
+
+    function displayInfo() {
+        const select = document.getElementById('choices');
+        const selectedId = select.value;
+        const infoDiv = document.getElementById('info');
+
+        if (selectedId === "") {
+            infoDiv.innerHTML = "<p>Please select a trainer to see more information.</p>";
+            return;
         }
-    </script>
+
+        const trainer = trainerData.find(t => t.id == selectedId);
+
+        if (trainer) {
+            infoDiv.innerHTML = `
+                <h4>${trainer.name}</h4>
+                <p><strong>Specialty:</strong> ${trainer.specialty}</p>
+                <p><strong>Certifications:</strong> ${trainer.certifications}</p>
+                <p><strong>Experience:</strong> ${trainer.experience} years</p>
+                <p><strong>Bio:</strong><br>${trainer.bio}</p>
+            `;
+        }
+    }
+</script>
 </head>
 
     <main>
@@ -96,15 +118,16 @@
             </div>
             <section class="bg-light py-5 mt-5">
               <div class="container d-flex flex-column flex-md-row align-items-center">
-                <form action="submit.html" method="POST">
+                <form action="submit.php" method="POST">
                     <label for="choices">Request a Trainer Here:</label>
                     <select id="choices" name="choices" onchange="displayInfo()">
-                        <option value="" disabled selected>Pick a Trainer</option>
-                        <option value="option1">James Carter</option>
-                        <option value="option2">Michael Hayes</option>
-                        <option value="option3">Emily Davis</option>
-                        <option value="option4">Sarah Miller</option>
-                    </select>
+                    <option value="" disabled selected>Pick a Trainer</option>
+                    <?php foreach ($trainers as $trainer): ?>
+                        <option value="<?php echo $trainer['id']; ?>">
+                            <?php echo htmlspecialchars($trainer['name']); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
                     
                     <br><br>
             
@@ -120,8 +143,8 @@
             <div class="container-fluid d-flex justify-content-between align-items-center">
                 <a class="btn btn-dark" href="index.html">Home</a>
                 <nav class="d-flex gap-3">
-                    <a href="whyUs.html" class="btn">Why Us</a>
-                    <a href="contact.html" class="btn">Contact Us</a>
+                    <a href="whyUs.php" class="btn">Why Us</a>
+                    <a href="contact.php" class="btn">Contact Us</a>
                 </nav>
                 <div class="d-flex gap-3">
                     <a href="https://www.facebook.com/?stype=lo&flo=1&deoia=1&jlou=AfdjgGZOS83Ieqm0hmBi6nRSnGTFnPIg0QwQUkfn8PAQkKCD96hoN3jYiNbd3hWJl-w_fxz34f3OjXcnvltHSD4jO78MOHRtFU_ZZ9YpS4dHfA&smuh=24868&lh=Ac8iXpovKhmWYm_-UDk" target="_blank">

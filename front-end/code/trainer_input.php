@@ -1,8 +1,6 @@
 <?php
-$host = "localhost";
-$dbname = "healthHorizon";
-$username = "root";
-$password = "";
+$conn = require __DIR__ . "/database.php";
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -58,5 +56,3 @@ $password = "";
     </div>
 </body>
 </html>
-
-?>

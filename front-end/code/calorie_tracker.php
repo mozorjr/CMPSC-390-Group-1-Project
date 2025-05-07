@@ -1,77 +1,181 @@
 <?php
-header("Content-Type: application/json"); // Force JSON output
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+session_start();
+$isLoggedIn = isset($_SESSION['user_id']);
+?>
 
-// Use your existing database connection file
-$mysqli = require __DIR__ . "/database.php";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calorie Tracker</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+        }
 
-// Retrieve and sanitize form data via POST
-$height = $_POST['height'] ?? null;
-$weight = $_POST['weight'] ?? null;
-$age = $_POST['age'] ?? null;
-$gender = $_POST['gender'] ?? null;
-$goal = $_POST['goal'] ?? null;
-$target_weight = isset($_POST['target_weight']) && $_POST['target_weight'] !== '' ? floatval($_POST['target_weight']) : null;
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
 
+        .content {
+            flex: 1;
+            margin-top: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px;
+        }
 
-// Check required fields
-if (!$height || !$weight || !$age || !$gender || !$goal) {
-    http_response_code(400);
-    echo json_encode(["error" => "Missing required fields."]);
-    exit;
-}
+        .calorie-tracker-box {
+            width: 100%;
+            max-width: 500px;
+            padding: 40px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            background-color: white;
+            border-radius: 8px;
+        }
 
-// Calculate BMR using the Harris-Benedict formula
-if ($gender === "male") {
-    $bmr = 66.5 + (13.75 * $weight) + (5.003 * $height) - (6.75 * $age);
-} else {
-    $bmr = 655 + (9.563 * $weight) + (1.850 * $height) - (4.676 * $age);
-}
+        footer {
+            background-color: #f8f9fa;
+            padding: 20px;
+            margin-top: auto;
+            width: 100%;
+        }
 
-// Adjust calories based on the goal
-switch ($goal) {
-    case "maintain":
-        $calorieIntake = $bmr * 1.55;
-        break;
-    case "lose":
-        $calorieIntake = $bmr * 1.2;
-        break;
-    case "gain":
-        $calorieIntake = $bmr * 1.75;
-        break;
-    default:
-        $calorieIntake = $bmr;
-        break;
-}
+        .footer-links a {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
 
-$query = "
-    INSERT INTO calorie_results (height, weight, age, gender, goal, target_weight, calories)
-    VALUES (?, ?, ?, ?, ?, ?, ?)
-";
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="btn btn-dark" href="index.html">Home</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mx-auto">
+            <li class="nav-item"><a class="nav-link" href="about.php">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="member.php">Memberships</a></li>
+                <li class="nav-item"><a class="nav-link" href="calorie_tracker.php">Calorie Tracker</a></li>
+                <li class="nav-item"><a class="nav-link" href="dashboard.php">User Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link" href="sleepLog.php">Sleep Log</a></li>
+                <li class="nav-item"><a class="nav-link" href="workoutLog.php">Workout Log</a></li>
+                <li class="nav-item"><a class="nav-link" href="RT.php">Request a Trainer</a></li>
+                <li class="nav-item"><a class="nav-link" href="trainers.php">Apply For Trainer</a></li>
+                <li class="nav-item"><a class="nav-link" href="gymmap.php">Gyms</a></li>
+                <li class="nav-item"><a class="nav-link" href="whyUs.php">Why Us</a></li>
+                <li class="nav-item"><a class="nav-link" href="contact.php">Contact Us</a></li>
+            </ul>
+            <?php if ($isLoggedIn): ?>
+                <a class="btn btn-outline-danger ms-2" href="logout.php">Logout</a>
+            <?php else: ?>
+                <a class="btn btn-dark" href="signup.php">Signup/Login</a>
+            <?php endif; ?>
+        </div>
+    </div>
+</nav>
 
-$stmt = $mysqli->prepare($query);
+<section class="content">
+    <div class="calorie-tracker-box p-4 shadow-sm rounded">
+        <h1 class="text-center mb-4">Calorie Tracker</h1>
+        <form id="calorieForm">
+            <div class="mb-3">
+                <label for="height" class="form-label">Height (cm):</label>
+                <input type="number" class="form-control" id="height" name="height" required>
+            </div>
 
-$target_weight_param = $target_weight ?? null;
+            <div class="mb-3">
+                <label for="weight" class="form-label">Current Weight (kg):</label>
+                <input type="number" class="form-control" id="weight" name="weight" required>
+            </div>
 
-$stmt = $mysqli->prepare($query);
+            <div class="mb-3">
+                <label for="age" class="form-label">Age (years):</label>
+                <input type="number" class="form-control" id="age" name="age" required>
+            </div>
 
-if (!$stmt) {
-    http_response_code(500);
-    echo json_encode(["error" => "Failed to prepare SQL statement."]);
-    exit;
-}
+            <div class="mb-3">
+                <label for="gender" class="form-label">Gender:</label>
+                <select id="gender" name="gender" class="form-control">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+            </div>
 
-$stmt->bind_param("ddisssd", $height, $weight, $age, $gender, $goal, $target_weight_param, $calorieIntake);
+            <div class="mb-3">
+                <label for="goal" class="form-label">Goal:</label>
+                <select id="goal" name="goal" class="form-control">
+                    <option value="maintain">Maintain Weight</option>
+                    <option value="lose">Lose Weight</option>
+                    <option value="gain">Gain Weight</option>
+                </select>
+            </div>
 
+            <div class="mb-3">
+                <label for="target-weight" class="form-label">Target Weight (kg):</label>
+                <input type="number" class="form-control" id="target-weight" name="target_weight">
+                <small class="form-text text-muted">Leave empty if maintaining current weight.</small>
+            </div>
 
+            <button type="submit" class="btn btn-primary w-100">Calculate Calories</button>
+        </form>
 
-if ($stmt->execute()) {
-    echo json_encode(["calories" => round($calorieIntake)]);
-} else {
-    http_response_code(500);
-    echo json_encode(["error" => "Database insert failed."]);
-}
+        <div id="calories-result" style="display:none; margin-top: 20px;">
+            <h3>Your Recommended Daily Calorie Intake: <span id="calories"></span> kcal</h3>
+        </div>
+    </div>
+</section>
 
-$stmt->close();
-$mysqli->close();
+<footer class="bg-light py-4 mt-5">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+        <a class="btn btn-dark" href="index.html">Home</a>
+        <nav class="d-flex gap-3">
+            <a href="whyUs.php" class="btn">Why Us</a>
+            <a href="contact.php" class="btn">Contact Us</a>
+        </nav>
+    </div>
+</footer>
+
+<script>
+document.getElementById("calorieForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const formData = new FormData(this);
+
+    fetch("calculate_calorie.php", {
+        method: "POST",
+        body: formData,
+        credentials: "include"
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.calories) {
+            document.getElementById("calories").textContent = data.calories;
+            document.getElementById("calories-result").style.display = "block";
+        } else {
+            alert(data.error || "Something went wrong.");
+        }
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        alert("Error calculating calories.");
+    });
+});
+</script>
+
+</body>
+</html>

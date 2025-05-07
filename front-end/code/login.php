@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // Verify password
         if (password_verify($password, $user["UserPasswordHash"])) {
             $_SESSION["user_id"] = $user["UserID"];
-            header("Location: workoutLog.html");
+            header("Location: dashboard.php");
             exit;
         } else {
             $is_invalid = true;
@@ -47,21 +47,32 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   <!-- NAVBAR -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <a class="btn btn-dark" href="index.html">Home</a>
-      <div class="collapse navbar-collapse">
-        <ul class="navbar-nav mx-auto">
-          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-          <li class="nav-item"><a class="nav-link" href="member.html">Memberships</a></li>
-          <li class="nav-item"><a class="nav-link" href="calorie_tracker.html">Calorie Tracker</a></li>
-          <li class="nav-item"><a class="nav-link" href="RT.html">Request a Trainer</a></li>
-          <li class="nav-item"><a class="nav-link" href="gymmap.html">Gyms</a></li>
-          <li class="nav-item"><a class="nav-link" href="whyUs.html">Why Us</a></li>
-          <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
-        </ul>
-        <a class="btn btn-dark" href="signup.html">Signup</a>
-      </div>
+        <a class="btn btn-dark" href="index.html">Home</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mx-auto">
+            <li class="nav-item"><a class="nav-link" href="about.php">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="member.php">Memberships</a></li>
+                <li class="nav-item"><a class="nav-link" href="calorie_tracker.php">Calorie Tracker</a></li>
+                <li class="nav-item"><a class="nav-link" href="dashboard.php">User Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link" href="sleepLog.php">Sleep Log</a></li>
+                <li class="nav-item"><a class="nav-link" href="workoutLog.php">Workout Log</a></li>
+                <li class="nav-item"><a class="nav-link" href="RT.php">Request a Trainer</a></li>
+                <li class="nav-item"><a class="nav-link" href="trainers.php">Apply For Trainer</a></li>
+                <li class="nav-item"><a class="nav-link" href="gymmap.php">Gyms</a></li>
+                <li class="nav-item"><a class="nav-link" href="whyUs.php">Why Us</a></li>
+                <li class="nav-item"><a class="nav-link" href="contact.php">Contact Us</a></li>
+            </ul>
+            <?php if ($isLoggedIn): ?>
+                <a class="btn btn-outline-danger ms-2" href="logout.php">Logout</a>
+            <?php else: ?>
+                <a class="btn btn-dark" href="signup.php">Signup/Login</a>
+            <?php endif; ?>
+        </div>
     </div>
-  </nav>
+</nav>
 
   <!-- LOGIN FORM -->
   <main class="container text-center my-5">
@@ -92,7 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       <button type="submit" class="btn btn-primary w-100">Log in</button>
     </form>
 
-    <p class="mt-3">Need to create an account? <a href="signup.html">Signup</a></p>
+    <p class="mt-3">Need to create an account? <a href="signup.php">Signup</a></p>
   </main>
 </body>
 </html>
