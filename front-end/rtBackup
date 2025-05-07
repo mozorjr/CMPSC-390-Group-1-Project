@@ -169,4 +169,3 @@ $isLoggedIn = isset($_SESSION['user_id']);
       </script>
     </main>
 </body>
-
