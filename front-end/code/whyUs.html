@@ -16,9 +16,18 @@
         <ul class="navbar-nav mx-auto">
           <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
           <li class="nav-item"><a class="nav-link" href="member.html">Memberships</a></li>
+          <li class="nav-item"><a class="nav-link" href="calorie_tracker.html">Calorie Tracker</a></li>
           <li class="nav-item"><a class="nav-link" href="RT.html">Request a Trainer</a></li>
+          <li class="nav-item"><a class="nav-link" href="trainers.php">Trainers</a></li>
+          <li class="nav-item"><a class="nav-link" href="gymmap.html">Gyms</a></li>
           <li class="nav-item"><a class="nav-link" href="whyUs.html">Why Us</a></li>
           <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
+          <li class="nav-item d-none" id="sleep-tracker-nav">
+            <a class="nav-link" href="sleepLog.html">Sleep Tracker</a>
+        </li>
+        <li class="nav-item d-none" id="workout-tracker-nav">
+            <a class="nav-link" href="workoutLog.html">Workout Tracker</a>
+        </li>
         </ul>
         <a class="btn btn-dark" href="signup.html" id="signup-btn">Signup</a>
             <a href="profile.html" id="profile-btn" class="d-none">
@@ -32,13 +41,13 @@
     <section class="text-center mt-5">
       <h2 class="fw-bold mb-5">Why Us</h2>
       <div class="image-container">
-        <img src="{{url_for('static',filename='images/stock.jpg')}}" alt="Why Us Image">
+        <img src="stock.jpg" alt="Why Us Image">
   </section>
         
         </div>
         <section class="bg-light py-5 mt-5">
           <div class="container d-flex flex-column flex-md-row align-items-center">
-              <img src="{{url_for('static',filename='images/Designer.jpeg')}}" class="img-fluid rounded-circle me-md-5 mb-4 mb-md-0" style="max-width: 200px;" alt="Why Us Image">
+              <img src="Designer.jpeg" class="img-fluid rounded-circle me-md-5 mb-4 mb-md-0" style="max-width: 200px;" alt="Why Us Image">
               <div>
                   <p class="fs-5">We provide top-tier health tracking solutions tailored to individual needs.</p>
                   <p class="fs-5">Our programs and trainers will work well with any and all levels of participants.</p>
@@ -57,7 +66,7 @@
                             <i class="fas fa-user-friends fa-3x mb-3"></i>
                             <h4>Personalized Plans</h4>
                             <p>We tailor every fitness program to suit your individual needs.</p>
-                            <img src="{{url_for('static',filename='images/personalized.jpg')}}" class="img-fluid rounded mt-3" alt="Personalized Plans">
+                            <img src="personalized.jpg" class="img-fluid rounded mt-3" alt="Personalized Plans">
                         </div>
                     </div>
                     <div class="col-md-4 mb-4">
@@ -65,7 +74,7 @@
                             <i class="fas fa-cogs fa-3x mb-3"></i>
                             <h4>Professional Trainers</h4>
                             <p>Our trainers are certified, experienced, and ready to help you reach your goals.</p>
-                            <img src="{{url_for('static',filename='images/personaltr.jpg')}}" class="img-fluid rounded mt-3" alt="Professional Trainers">
+                            <img src="personaltr.jpg" class="img-fluid rounded mt-3" alt="Professional Trainers">
                         </div>
                     </div>
                     <div class="col-md-4 mb-4">
@@ -73,7 +82,7 @@
                             <i class="fas fa-chart-line fa-3x mb-3"></i>
                             <h4>Progress Tracking</h4>
                             <p>Monitor your improvements through our advanced tracking systems.</p>
-                            <img src="{{url_for('static',filename='images/progress.jpg')}}" class="img-fluid rounded mt-3" alt="Progress Tracking">
+                            <img src="progress.jpg" class="img-fluid rounded mt-3" alt="Progress Tracking">
                         </div>
                     </div>
                 </div>
@@ -178,30 +187,38 @@
             </nav>
             <div class="d-flex gap-3">
                 <a href="https://www.facebook.com/?stype=lo&flo=1&deoia=1&jlou=AfdjgGZOS83Ieqm0hmBi6nRSnGTFnPIg0QwQUkfn8PAQkKCD96hoN3jYiNbd3hWJl-w_fxz34f3OjXcnvltHSD4jO78MOHRtFU_ZZ9YpS4dHfA&smuh=24868&lh=Ac8iXpovKhmWYm_-UDk" target="_blank">
-                    <img src="{{url_for('static',filename='images/Facebook_logo_(square).png')}}" class="img-fluid" style="max-width: 30px;" alt="Facebook">
+                    <img src="Facebook_logo_(square).png" class="img-fluid" style="max-width: 30px;" alt="Facebook">
             </a>
             <a href="https://www.linkedin.com/in/health-horizon-825a80351" target="_blank">
-            <img src="{{url_for('static',filename='images/linkedin.png')}}" class="img-fluid" style="max-width: 30px;" alt="LinkedIn">
+            <img src="linkedin.png" class="img-fluid" style="max-width: 30px;" alt="LinkedIn">
                     </a>
                     <a href="https://www.instagram.com/hea.lthhorizon/" target="_blank">
-                <img src="{{url_for('static',filename='images/Insta-Logo.png')}}" class="img-fluid" style="max-width: 30px;" alt="Instagram">
+                <img src="Insta-Logo.png" class="img-fluid" style="max-width: 30px;" alt="Instagram">
                     </a>
             </div>
         </div>
     </footer>
 
     <script>
-      window.onload = function() {
-      let loggedIn = localStorage.getItem("loggedIn") === "true";
-      let signupBtn = document.getElementById("signup-btn");
-      let profileBtn = document.getElementById("profile-btn");
-  
-      if (loggedIn) {
-          signupBtn.classList.add("d-none"); // Hide Signup button
-          profileBtn.classList.remove("d-none"); // Show Profile icon
-      }
-  };
+    window.onload = function() {
+        let loggedIn = localStorage.getItem("loggedIn") === "true";
+        let signupBtn = document.getElementById("signup-btn");
+        let profileBtn = document.getElementById("profile-btn");
+        let sleepTrackerLink = document.getElementById("sleep-tracker-nav");
+        let workoutTrackerLink = document.getElementById("workout-tracker-nav");
         
-  </script>
+        if (loggedIn) {
+            signupBtn.classList.add("d-none"); // Hide Signup button
+            profileBtn.classList.remove("d-none"); // Show Profile icon
+            sleepTrackerLink.classList.remove("d-none"); // Show Sleep Tracker
+            workoutTrackerLink.classList.remove("d-none");// Show Workout Tracker
+            } else {
+            signupBtn.classList.remove("d-none"); // Show Signup button
+            profileBtn.classList.add("d-none"); // Hide Profile icon
+            sleepTrackerLink.classList.add("d-none"); // Hide Sleep Tracker
+            workoutTrackerLink.classList.add("d-none"); // Hide Workout Tracker
+        }
+};
+</script>
 </main>
 </body>

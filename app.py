@@ -26,6 +26,21 @@ product_ids = {
     'Simple': 'prod_RxcsN6qkIjlGcA'
 }
 
+# Define the calorie calculation function
+def calculate_calories(height, weight, age, gender):
+    # Mifflin-St Jeor equation
+    if gender == 'male':
+        # BMR = 10 * weight + 6.25 * height - 5 * age + 5
+        bmr = 10 * weight + 6.25 * height - 5 * age + 5
+    else:
+        # BMR = 10 * weight + 6.25 * height - 5 * age - 161
+        bmr = 10 * weight + 6.25 * height - 5 * age - 161
+
+    # The calorie intake can depend on activity level. We'll assume a moderate activity level (BMR * 1.55)
+    daily_calories = bmr * 1.55
+
+    return daily_calories
+
 # Route to render the checkout page
 @app.route('/purchase.html')
 def index():
@@ -34,7 +49,7 @@ def index():
 # Route for the home page
 @app.route("/")
 def home():
-    return render_template("index.html") 
+    return render_template("index.html")
 
 # Route for "About" page
 @app.route("/about.html")
@@ -51,6 +66,11 @@ def member():
 def request_trainer():
     return render_template("RT.html")
 
+# Route for "Calorie Tracker" page
+@app.route("/calorie_tracker.html")
+def calorie_tracker():
+    return render_template("calorie_tracker.html")
+
 # Route for "Why Us" page
 @app.route("/whyUs.html")
 def why_us():
@@ -60,6 +80,22 @@ def why_us():
 @app.route("/contact.html")
 def contact():
     return render_template("contact.html")
+
+# Route to calculate calories
+@app.route('/calculate_calories', methods=['POST'])
+def calculate_calories_route():
+    data = request.json
+
+    height = data.get('height')
+    weight = data.get('weight')
+    age = data.get('age')
+    gender = data.get('gender')
+
+    if height and weight and age and gender:
+        daily_calories = calculate_calories(height, weight, age, gender)
+        return jsonify({'calories': round(daily_calories)})
+    else:
+        return jsonify({'error': 'Invalid input'}), 400
 
 # Route to create a checkout session
 @app.route('/create-checkout-session', methods=['POST'])

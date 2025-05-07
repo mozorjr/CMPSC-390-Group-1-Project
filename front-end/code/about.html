@@ -15,14 +15,27 @@
         <ul class="navbar-nav mx-auto">
           <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
           <li class="nav-item"><a class="nav-link" href="member.html">Memberships</a></li>
+          <li class="nav-item"><a class="nav-link" href="calorie_tracker.html">Calorie Tracker</a></li>
           <li class="nav-item"><a class="nav-link" href="RT.html">Request a Trainer</a></li>
+          <li class="nav-item"><a class="nav-link" href="trainers.php">Trainers</a></li>
+          <li class="nav-item"><a class="nav-link" href="gymmap.html">Gyms</a></li>
           <li class="nav-item"><a class="nav-link" href="whyUs.html">Why Us</a></li>
           <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
+          <li class="nav-item d-none" id="sleep-tracker-nav">
+            <a class="nav-link" href="sleepLog.html">Sleep Tracker</a>
+        </li>
+        <li class="nav-item d-none" id="workout-tracker-nav">
+            <a class="nav-link" href="workoutLog.html">Workout Tracker</a>
+        </li>
         </ul>
-        <a class="btn btn-dark" href="login.html">Login / Signup</a>
+        <a class="btn btn-dark" href="signup.html" id="signup-btn">Signup</a>
+        <a href="profile.html" id="profile-btn" class="d-none">
+          <svg  xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#1f1f1f"><path d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Z"/></svg>
+        </a>
       </div>
     </div>
   </nav>
+
   <section class="text-center mt-5">
     <h2 class="fw-bold mb-4">About Health Horizons</h2>
     <p class="fs-5 text-muted">Empowering your fitness journey with personalized training and health tracking.</p>
@@ -49,7 +62,7 @@
         
         <div class="col-md-4 mb-4">
           <div class="p-4 bg-white rounded shadow">
-            <img src="{{url_for('static',filename='images/trainer1.jpg')}}" class="img-fluid rounded-circle mb-3" alt="Trainer 1">
+            <img src="trainer1.jpg" class="img-fluid rounded-circle mb-3" alt="Trainer 1">
             <h4>James Carter</h4>
             <p>Strength Training & Nutrition Expert</p>
           </div>
@@ -57,7 +70,7 @@
 
         <div class="col-md-4 mb-4">
           <div class="p-4 bg-white rounded shadow">
-            <img src="{{url_for('static',filename='images/trainer2.jpg')}}" class="img-fluid rounded-circle mb-3" alt="Trainer 2">
+            <img src="trainer2.jpg" class="img-fluid rounded-circle mb-3" alt="Trainer 2">
             <h4>Michael Hayes</h4>
             <p>Certified Yoga & Pilates Instructor</p>
           </div>
@@ -65,7 +78,7 @@
 
         <div class="col-md-4 mb-4">
           <div class="p-4 bg-white rounded shadow">
-            <img src="{{url_for('static',filename='images/trainer3.jpg')}}" class="img-fluid rounded-circle mb-3" alt="Trainer 3">
+            <img src="trainer3.jpg" class="img-fluid rounded-circle mb-3" alt="Trainer 3">
             <h4>Emily Davis</h4>
             <p>HIIT & Cardio Specialist</p>
           </div>
@@ -104,35 +117,45 @@
   </section>
 
   <footer class="foot bg-light py-4 mt-5">
-        <div class="container-fluid d-flex justify-content-between align-items-center">
-            <a class="btn btn-dark" href="index.html">Home</a>
-            <nav class="d-flex gap-3">
-                <a href="whyUs.html" class="btn">Why Us</a>
-                <a href="contact.html" class="btn">Contact Us</a>
-            </nav>
-            <div class="d-flex gap-3">
-                <a href="https://www.facebook.com/?stype=lo&flo=1&deoia=1&jlou=AfdjgGZOS83Ieqm0hmBi6nRSnGTFnPIg0QwQUkfn8PAQkKCD96hoN3jYiNbd3hWJl-w_fxz34f3OjXcnvltHSD4jO78MOHRtFU_ZZ9YpS4dHfA&smuh=24868&lh=Ac8iXpovKhmWYm_-UDk" target="_blank">
-                    <img src="{{url_for('static',filename='images/Facebook_logo_(square).png')}}" class="img-fluid" style="max-width: 30px;" alt="Facebook">
-            </a>
-            <a href="https://www.linkedin.com/in/health-horizon-825a80351" target="_blank">
-            <img src="{{url_for('static',filename='images/linkedin.png')}}" class="img-fluid" style="max-width: 30px;" alt="LinkedIn">
-                    </a>
-                    <a href="https://www.instagram.com/hea.lthhorizon/" target="_blank">
-                <img src="{{url_for('static',filename='images/Insta-Logo.png')}}" class="img-fluid" style="max-width: 30px;" alt="Instagram">
-                    </a>
-            </div>
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+        <a class="btn btn-dark" href="index.html">Home</a>
+        <nav class="d-flex gap-3">
+            <a href="whyUs.html" class="btn">Why Us</a>
+            <a href="contact.html" class="btn">Contact Us</a>
+        </nav>
+        <div class="d-flex gap-3">
+            <a href="https://www.facebook.com/?stype=lo&flo=1&deoia=1&jlou=AfdjgGZOS83Ieqm0hmBi6nRSnGTFnPIg0QwQUkfn8PAQkKCD96hoN3jYiNbd3hWJl-w_fxz34f3OjXcnvltHSD4jO78MOHRtFU_ZZ9YpS4dHfA&smuh=24868&lh=Ac8iXpovKhmWYm_-UDk" target="_blank">
+                <img src="Facebook_logo_(square).png" style="max-width: 30px;" alt="Facebook">
+        </a>
+        <a href="https://www.linkedin.com/in/health-horizon-825a80351" target="_blank">
+        <img src="linkedin.png" style="max-width: 30px;" alt="LinkedIn">
+                </a>
+                <a href="https://www.instagram.com/hea.lthhorizon/" target="_blank">
+            <img src="Insta-Logo.png" style="max-width: 30px;" alt="Instagram">
+                </a>
         </div>
-    </footer>
+    </div>
+</footer>
+
   <script>
       window.onload = function() {
       let loggedIn = localStorage.getItem("loggedIn") === "true";
       let signupBtn = document.getElementById("signup-btn");
       let profileBtn = document.getElementById("profile-btn");
+      let sleepTrackerLink = document.getElementById("sleep-tracker-nav");
+      let workoutTrackerLink = document.getElementById("workout-tracker-nav");
   
       if (loggedIn) {
           signupBtn.classList.add("d-none"); // Hide Signup button
           profileBtn.classList.remove("d-none"); // Show Profile icon
-      }
+          sleepTrackerLink.classList.remove("d-none"); // Show Sleep Tracker
+          workoutTrackerLink.classList.remove("d-none");// Show Workout Tracker
+          } else {
+          signupBtn.classList.remove("d-none"); // Show Signup button
+          profileBtn.classList.add("d-none"); // Hide Profile icon
+          sleepTrackerLink.classList.add("d-none"); // Hide Sleep Tracker
+          workoutTrackerLink.classList.add("d-none"); // Hide Workout Tracker
+          }
   };
   </script>
 </body>

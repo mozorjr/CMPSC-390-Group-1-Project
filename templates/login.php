@@ -1,3 +1,38 @@
+<?php
+
+$is_invalid = false;
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    
+    $mysqli = require __DIR__ . "/database.php";
+    
+    $sql = sprintf("SELECT * FROM user
+                    WHERE email = '%s'",
+                   $mysqli->real_escape_string($_POST["email"]));
+    
+    $result = $mysqli->query($sql);
+    
+    $user = $result->fetch_assoc();
+    
+    if ($user) {
+        
+        if (password_verify($_POST["password"], $user["password_hash"])) {
+            
+            session_start();
+            
+            session_regenerate_id();
+            
+            $_SESSION["user_id"] = $user["id"];
+            
+            header("Location: index.php");
+            exit;
+        }
+    }
+    
+    $is_invalid = true;
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,10 +52,7 @@
         <ul class="navbar-nav mx-auto">
           <li classsss="nav-item"><a class="nav-link" href="about.html">About</a></li>
           <li class="nav-item"><a class="nav-link" href="member.html">Memberships</a></li>
-          <li class="nav-item"><a class="nav-link" href="calorie_tracker.html">Calorie Tracker</a></li>
           <li class="nav-item"><a class="nav-link" href="RT.html">Request a Trainer</a></li>
-          <li class="nav-item"><a class="nav-link" href="trainers.php">Trainers</a></li>
-          <li class="nav-item"><a class="nav-link" href="gymmap.html">Gyms</a></li>
           <li class="nav-item"><a class="nav-link" href="whyUs.html">Why Us</a></li>
           <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
         </ul>
@@ -51,8 +83,7 @@
             <input type="password" name="password" id="password-input" placeholder="Password" >
           </div>
           <div>
-            <div class="logBtn">
-          <input type="submit" value="Login" class="btn btn-dark w-20">
+            <button>Log in</button>
             </div>
         </form>
 
@@ -68,33 +99,34 @@
             </nav>
             <div class="d-flex gap-3">
                 <a href="https://www.facebook.com/?stype=lo&flo=1&deoia=1&jlou=AfdjgGZOS83Ieqm0hmBi6nRSnGTFnPIg0QwQUkfn8PAQkKCD96hoN3jYiNbd3hWJl-w_fxz34f3OjXcnvltHSD4jO78MOHRtFU_ZZ9YpS4dHfA&smuh=24868&lh=Ac8iXpovKhmWYm_-UDk" target="_blank">
-                    <img src="Facebook_logo_(square).png" class="img-fluid" style="max-width: 30px;" alt="Facebook">
+                    <img src="{{url_for('static',filename='images/Facebook_logo_(square).png')}}" class="img-fluid" style="max-width: 30px;" alt="Facebook">
             </a>
             <a href="https://www.linkedin.com/in/health-horizon-825a80351" target="_blank">
-            <img src="linkedin.png" class="img-fluid" style="max-width: 30px;" alt="LinkedIn">
+            <img src="{{url_for('static',filename='images/linkedin.png')}}" class="img-fluid" style="max-width: 30px;" alt="LinkedIn">
                     </a>
                     <a href="https://www.instagram.com/hea.lthhorizon/" target="_blank">
-                <img src="Insta-Logo.png" class="img-fluid" style="max-width: 30px;" alt="Instagram">
+                <img src="{{url_for('static',filename='images/Insta-Logo.png')}}" class="img-fluid" style="max-width: 30px;" alt="Instagram">
                     </a>
             </div>
         </div>
     </footer>
 
     <script>
-      function auth(event){
-        event.preventDefault();
-  
-        var email=document.getElementById('email-input').value;
-        var password=document.getElementById('password-input').value;
-      
-        if(email==='admin@gmail.com' && password=== "12345678"){
-          localStorage.setItem("loggedIn", "true");
-            window.location.href = 'loged.html';
-        }
-        else{
-            alert("invalid info");
-            return;
-        }
+    function auth(event){
+      event.preventDefault();
+
+      var email=document.getElementById('email-input').value;
+      var password=document.getElementById('password-input').value;
+    
+      if(email==='admin@gmail.com' && password=== "12345678"){
+        localStorage.setItem("loggedIn", "true");
+          window.location.href = 'index.html';
       }
-      </script>
+      else{
+          alert("invalid info");
+          return;
+      }
+    }
+    </script>
 </body>
+

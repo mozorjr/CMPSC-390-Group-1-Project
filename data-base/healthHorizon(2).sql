@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1deb3
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Mar 18, 2025 at 07:44 PM
--- Server version: 8.0.41-0ubuntu0.24.10.1
--- PHP Version: 8.3.11
+-- Host: localhost
+-- Generation Time: Apr 10, 2025 at 11:02 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,9 +28,9 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `App` (
-  `AppID` int NOT NULL,
+  `AppID` int(11) NOT NULL,
   `AppVersion` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `App`
@@ -48,7 +48,7 @@ INSERT INTO `App` (`AppID`, `AppVersion`) VALUES
 -- (See below for the actual view)
 --
 CREATE TABLE `AvgStepsPerUser` (
-`UserID` int unsigned
+`UserID` int(10) unsigned
 ,`AvgSteps` decimal(14,4)
 );
 
@@ -59,10 +59,10 @@ CREATE TABLE `AvgStepsPerUser` (
 --
 
 CREATE TABLE `ConnectsTo` (
-  `ConnectID` int NOT NULL,
-  `UserID` int UNSIGNED NOT NULL,
-  `AppID` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `ConnectID` int(11) NOT NULL,
+  `UserID` int(10) UNSIGNED NOT NULL,
+  `AppID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -74,7 +74,7 @@ CREATE TABLE `ContactForm` (
   `Token` varchar(255) NOT NULL,
   `Name` varchar(255) NOT NULL,
   `Email` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -83,15 +83,24 @@ CREATE TABLE `ContactForm` (
 --
 
 CREATE TABLE `UserData` (
-  `DataID` int NOT NULL,
-  `UserID` int UNSIGNED NOT NULL,
+  `DataID` int(11) NOT NULL,
+  `UserID` int(10) UNSIGNED NOT NULL,
   `GenderValue` varchar(10) NOT NULL,
   `HeightValue` decimal(5,2) DEFAULT NULL,
   `WeightValue` decimal(5,2) DEFAULT NULL,
-  `AgeValue` int DEFAULT NULL,
-  `AvgSteps` decimal(10,2) DEFAULT '0.00',
-  `Steps` int DEFAULT '0'
-) ;
+  `AgeValue` int(11) DEFAULT NULL,
+  `AvgSteps` decimal(10,2) DEFAULT 0.00,
+  `Steps` int(11) DEFAULT 0,
+  `TargetWeight` decimal(5,2) DEFAULT NULL,
+  `Goal` enum('lose','gain') NOT NULL DEFAULT 'lose'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `UserData`
+--
+
+INSERT INTO `UserData` (`DataID`, `UserID`, `GenderValue`, `HeightValue`, `WeightValue`, `AgeValue`, `AvgSteps`, `Steps`, `TargetWeight`, `Goal`) VALUES
+(4, 5, 'Female', 54.00, 155.00, 30, 0.00, 0, 150.00, 'lose');
 
 -- --------------------------------------------------------
 
@@ -100,11 +109,11 @@ CREATE TABLE `UserData` (
 --
 
 CREATE TABLE `UserLogs` (
-  `LogID` int NOT NULL,
-  `UserID` int UNSIGNED NOT NULL,
+  `LogID` int(11) NOT NULL,
+  `UserID` int(10) UNSIGNED NOT NULL,
   `Action` varchar(255) NOT NULL,
-  `Timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `Timestamp` timestamp NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -113,17 +122,26 @@ CREATE TABLE `UserLogs` (
 --
 
 CREATE TABLE `Users` (
-  `UserID` int UNSIGNED NOT NULL,
+  `UserID` int(10) UNSIGNED NOT NULL,
   `Height` decimal(5,2) NOT NULL,
-  `Age` int NOT NULL,
-  `Gender` varchar(10) NOT NULL,
+  `Age` int(11) NOT NULL,
+  `Gender` varchar(10) NOT NULL DEFAULT 'Unknown',
   `Weight` decimal(5,2) NOT NULL,
   `UserName` varchar(255) NOT NULL,
   `UserPasswordHash` varchar(255) NOT NULL,
   `Email` varchar(255) NOT NULL,
-  `CreatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `UpdatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `CreatedAt` timestamp NULL DEFAULT current_timestamp(),
+  `UpdatedAt` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `Users`
+--
+
+INSERT INTO `Users` (`UserID`, `Height`, `Age`, `Gender`, `Weight`, `UserName`, `UserPasswordHash`, `Email`, `CreatedAt`, `UpdatedAt`) VALUES
+(4, 0.00, 0, 'Unknown', 0.00, 'ad', '$2y$10$6UJghSrstfqv1ZhO5P67Eugsd1OnRz/Y6iWTmzoMzNEbAWdflWxyy', 'ad@gmail.com', '2025-03-28 23:07:51', '2025-03-28 23:07:51'),
+(5, 0.00, 0, 'Unknown', 0.00, 'ad2', '$2y$10$H9L3vhwmXTbSUoc7HpwHduH8aX.VTd9pGWgymWn9IR1BpsfIcyHiG', 'ad2@gmail.com', '2025-03-29 00:12:17', '2025-03-29 00:12:17'),
+(6, 0.00, 0, 'Unknown', 0.00, 'sd', '$2y$10$Ew/YqoGcy1pVJATovMcpMuDtKtdT5ZZvplDExgstqVS8N3/bad3wK', 'ad3@gmail.com', '2025-04-06 05:45:55', '2025-04-06 05:45:55');
 
 -- --------------------------------------------------------
 
@@ -187,31 +205,31 @@ ALTER TABLE `Users`
 -- AUTO_INCREMENT for table `App`
 --
 ALTER TABLE `App`
-  MODIFY `AppID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `AppID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `ConnectsTo`
 --
 ALTER TABLE `ConnectsTo`
-  MODIFY `ConnectID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ConnectID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `UserData`
 --
 ALTER TABLE `UserData`
-  MODIFY `DataID` int NOT NULL AUTO_INCREMENT;
+  MODIFY `DataID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `UserLogs`
 --
 ALTER TABLE `UserLogs`
-  MODIFY `LogID` int NOT NULL AUTO_INCREMENT;
+  MODIFY `LogID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `Users`
 --
 ALTER TABLE `Users`
-  MODIFY `UserID` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `UserID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables
